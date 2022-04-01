@@ -1,0 +1,34 @@
+#card {
+    border: 1px solid #eee;
+    width: 200px;
+    border-radius: 10px;
+    box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.1);
+
+    .image {
+        img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px 10px 0 0;
+        }
+    }
+
+    .card-body {
+        padding: 10px;
+
+        h3 {
+            font-size: 18px;
+            color: #222;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin: 0;
+        }
+
+        p {
+            font-size: 14px;
+            color: #1E3464;
+            font-style: italic;
+            font-weight: 600;
+            margin: 0;
+        }
+    }
+}
