@@ -1,5 +1,6 @@
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap';
+@import '~ngx-toastr/toastr';
 
 .btn {
     white-space: nowrap;
@@ -11,4 +12,10 @@
         border: none;
         box-shadow: none;
     }
+}
+
+.field-alert {
+    color: red;
+    font-weight: 600;
+    font-size: 12px;
 }

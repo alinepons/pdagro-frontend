@@ -3,7 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { faEnvelope } from '@fortawesome/free-regular-svg-icons';
 import { faArrowRightFromBracket, faArrowRotateRight,  } from '@fortawesome/free-solid-svg-icons';
-import { AuthenticationService } from 'src/app/core/services/auth.service';
+import { AuthenticationService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-forgot-password',
