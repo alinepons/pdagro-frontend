@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  URL_BASE: "https://pdagro.com.br/" //exemplo
+  URL_BASE: "https://api.pdagro.com/api/"
 };

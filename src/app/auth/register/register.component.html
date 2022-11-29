@@ -1,0 +1,119 @@
+<div class="container">
+
+    <div class="row mt-5">
+        <div class="col-12 col-md-6 col-lg-4 mx-auto text-center">
+            <img src="assets/logo.png" alt="Logomarca" class="logo img-fluid">
+            <h6 class="">Verificação de conformidade à LGPD</h6>
+            <h3 class="my-4">CADASTRO</h3>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-12 col-md-6 col-lg-4 mx-auto">
+            <form [formGroup]="formRegister" (ngSubmit)="register()">
+                <div class="mb-3">
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-text">
+                            <fa-icon [icon]="faUser"></fa-icon>
+                        </span>
+                        <input type="text" formControlName="fullname" class="form-control form-control-sm"
+                            placeholder="Nome completo" aria-label="Nome completo">
+                    </div>
+                    <div *ngIf="fullname.invalid && (fullname.dirty || fullname.touched)" class="field-alert">
+                        <div *ngIf="fullname.errors?.['required']">
+                            Este campo é obrigatório
+                        </div>
+                    </div>
+                    <div *ngIf="fullname.invalid && (fullname.dirty || fullname.touched)" class="field-alert">
+                        <div *ngIf="fullname.errors?.['minlength']">
+                            Nome muito curto
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-text">
+                            <fa-icon [icon]="faIdCard"></fa-icon>
+                        </span>
+                        <input type="tel" formControlName="cpf" class="form-control form-control-sm"
+                            placeholder="CPF" aria-label="CPF">
+                    </div>
+                    <div *ngIf="cpf.invalid && (cpf.dirty || cpf.touched)" class="field-alert">
+                        <div *ngIf="cpf.errors?.['required']">
+                            Este campo é obrigatório
+                        </div>
+                        <div *ngIf="cpf.errors?.['pattern']">
+                            CPF com formato inválido
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-text">
+                            <fa-icon [icon]="faEnvelope"></fa-icon>
+                        </span>
+                        <input type="email" formControlName="email" class="form-control form-control-sm"
+                            placeholder="Email" aria-label="Email">
+                    </div>
+                    <div *ngIf="email && email.invalid && (email.dirty || email.touched)" class="field-alert">
+                        <div *ngIf="email.errors?.['required']">
+                            Este campo é obrigatório
+                        </div>
+                        <div *ngIf="email.errors?.['pattern']">
+                            E-mail com formato inválido
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-text">
+                            <fa-icon [icon]="faLock"></fa-icon>
+                        </span>
+                        <input type="password" formControlName="password" class="form-control" placeholder="Senha"
+                            aria-label="Senha">
+                    </div>
+                    <div *ngIf="password && password.invalid && (password.dirty || password.touched)"
+                        class="field-alert">
+                        <div *ngIf="password.errors?.['required']">
+                            Este campo é obrigatório
+                        </div>
+                    </div>
+                    <div *ngIf="password.invalid && (password.dirty || password.touched)" class="field-alert">
+                        <div *ngIf="password.errors?.['minlength']">
+                            A senha deve conter 6 ou mais caracteres
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-text">
+                            <fa-icon [icon]="faLock"></fa-icon>
+                        </span>
+                        <input type="password" formControlName="re_password" class="form-control"
+                            placeholder="Confirmar senha" aria-label="Confirmar senha">
+                    </div>
+                    <div *ngIf="re_password && re_password.invalid && (re_password.dirty || re_password.touched)"
+                        class="field-alert">
+                        <div *ngIf="re_password.errors?.['required']">
+                            Este campo é obrigatório
+                        </div>
+                    </div>
+                    <div *ngIf="re_password.invalid && (re_password.dirty || re_password.touched)" class="field-alert">
+                        <div *ngIf="re_password.errors?.['minlength']">
+                            A senha deve conter 6 ou mais caracteres
+                        </div>
+                    </div>
+                </div>
+                <div class="buttons mt-4">
+                    <button type="submit" class="btn btn-sm btn-success px-3" [disabled]="formRegister.invalid">
+                        <fa-icon [icon]="faCheck"></fa-icon> Criar cadastro
+                    </button>
+                    <button type="button" class="btn mt-3" (click)="goLogin()">Já possui conta?
+                        Login</button>
+
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+</div>

@@ -1,20 +1,12 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { CardComponent } from './card/card.component';
-import { LoginComponent } from './login/login.component';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { RegisterComponent } from './register/register.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
-
-
+import { CommonModule } from "@angular/common";
+import { NgModule } from "@angular/core";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
+import { CardComponent } from "./card/card.component";
 
 @NgModule({
   declarations: [
-    CardComponent,
-    LoginComponent,
-    RegisterComponent,
-    ForgotPasswordComponent
+    CardComponent
   ],
   imports: [
     CommonModule,
@@ -23,10 +15,7 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
     ReactiveFormsModule
   ],
   exports : [
-    CardComponent,
-    LoginComponent,    
-    RegisterComponent,
-    ForgotPasswordComponent
+    CardComponent
   ]
 })
 export class ComponentsModule { }

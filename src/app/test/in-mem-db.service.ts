@@ -2,9 +2,9 @@ import { HttpErrorResponse, HttpRequest, HttpResponse } from '@angular/common/ht
 import { Injectable } from '@angular/core';
 import { InMemoryDbService, RequestInfo } from 'angular-in-memory-web-api';
 import { Observable, of } from 'rxjs';
-import { Auth } from '../models/auth';
-import { AuthResponse } from '../models/auth-response';
-import { FullUser } from '../models/full-user';
+import { Auth } from '../core/models/auth';
+import { AuthResponse } from '../core/models/auth-response';
+import { FullUser } from '../core/models/full-user';
 
 /**
  * Esta classe serve para simular um back-end real.

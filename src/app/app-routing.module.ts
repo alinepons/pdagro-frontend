@@ -1,42 +1,29 @@
 import { NgModule } from '@angular/core';
-import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from './guards/auth.guard';
-import { AdminFrameComponent } from './layouts/admin/admin-frame/admin-frame.component';
-import { AuthFrameComponent } from './layouts/auth/auth-frame/auth-frame.component';
+import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './core/guards/auth.guard';
 
-/// localhost:4200/dash
 
 const routes: Routes = [
   {
-    path: "", // se for digitado qualquer coisa, (localhost4200) é direcionado para a rota dash
-    redirectTo: "dash",
-    pathMatch: "full"
+    path: '',
+    redirectTo: 'views',
+    pathMatch: 'full'
   },
   {
-    path: "",
-    component: AuthFrameComponent,
-    children: [
-      {
-        path: "",
-        loadChildren: () => import('./layouts/auth/auth.module').then(m => m.AuthModule)
-      }
-    ]
+    path: 'views',
+    loadChildren: () => import('./views/views.module').then(m => m.ViewsModule),
+    canActivate: [ AuthGuard ]
   },
   {
-    path: "",
-    component: AdminFrameComponent,
-    canActivate: [AuthGuard],
-    children: [
-      {
-        path: "",
-        loadChildren: () => import('./layouts/admin/admin.module').then(m => m.AdminModule) // novas rotas
-      }
-    ]
-  },
+    path: 'auth',
+    loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
+  }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {preloadingStrategy: PreloadAllModules})],
+  imports: [
+    RouterModule.forRoot(routes)
+  ],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
