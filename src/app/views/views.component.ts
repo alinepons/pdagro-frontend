@@ -16,4 +16,8 @@ export class ViewsComponent implements OnInit {
   goLogin() {
     this.router.navigate(['auth/login'])
   }
+
+  logout() {
+    this.router.navigate(['views'])
+  }
 }

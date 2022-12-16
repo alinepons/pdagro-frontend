@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { faEnvelope, faIdCard } from '@fortawesome/free-regular-svg-icons';
-import { faLock, faCheck, faUser } from '@fortawesome/free-solid-svg-icons';
 import { ToastrService } from 'ngx-toastr';
 import { User } from 'src/app/core/models/user';
 import { AuthService } from 'src/app/core/service/auth.service';
@@ -13,12 +11,6 @@ import { AuthService } from 'src/app/core/service/auth.service';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
-
-  faEnvelope = faEnvelope
-  faLock = faLock
-  faCheck = faCheck
-  faUser = faUser
-  faIdCard = faIdCard
 
   formRegister: FormGroup
 

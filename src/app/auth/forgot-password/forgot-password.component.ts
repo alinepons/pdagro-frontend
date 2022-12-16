@@ -1,7 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
-import { faEnvelope, faArrowRotateRight, faArrowRightFromBracket, faLock, faKey } from "@fortawesome/free-solid-svg-icons";
 import { ToastrService } from "ngx-toastr";
 import { Auth } from "src/app/core/models/auth";
 import { AuthService } from "src/app/core/service/auth.service";
@@ -13,12 +12,6 @@ import { AuthService } from "src/app/core/service/auth.service";
   styleUrls: ['./forgot-password.component.scss']
 })
 export class ForgotPasswordComponent implements OnInit {
-
-  faEnvelope = faEnvelope
-  faRotateRight = faArrowRotateRight
-  faLogin = faArrowRightFromBracket
-  faLock = faLock
-  faKey = faKey
 
   formForgotPassword: FormGroup
   showCode: boolean = false

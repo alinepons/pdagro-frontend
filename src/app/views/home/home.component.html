@@ -1,7 +1,55 @@
-<div class="container">
-    <div class="row">
-        <div class="col">
-            <pre>{{user | json}}</pre>
+<div class="container my-4 py-4 h-100">
+    <div class="row mt-5">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-12 col-md-6 card-intro">
+                    <!--<h3 class="mb-4">O que é</h3>-->
+                    <p>
+                        <b>Privacidade de Dados no Agronegócio</b> é um sistema especialista gratuito para verificar a conformidade de empresas
+                        do agronegócio com a Lei Geral de Proteção de Dados (LGPD).
+                    </p>
+                    <p>
+                        Utiliza a ferramenta <i><b>Balanced Scorecard (BSC)</b></i> para avaliar o desempenho
+                        organizacional, adaptada nas dimensões: Processos, Lei/Norma, Tecnologia e Aprendizado.
+                    </p>
+                    <p>
+                        Após realizar o diagnóstico você recebe recomendações para auxiliar na tomada de decisões.</p>
+
+                    <button class="btn btn-success btn-sm px-4 mt-2" [routerLink]="['/views/diagnostic']">Iniciar
+                        diagnóstico</button>
+
+                    <div class="row mt-4">
+                        <div class="col-6 text-center">
+                            <div class="card h-100">
+                                <div class="card-header text-success">
+                                     <h6 class="m-0"><i class="fa fa-thumbs-up"></i> SE APLICA</h6> 
+                                </div>
+                                <div class="card-body">
+                                 <p>Pessoas ou empresas que realizam operações
+                                    com dados pessoais (em meios digitais ou em papel) coletados em território
+                                    nacional
+                                    para oferecer ou fornecer bens ou serviços.</p>   
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 text-center">
+                            <div class="card h-100">
+                                <div class="card-header text-danger">
+                                     <h6 class="m-0"><i class="fa fa-thumbs-down"></i> NÃO SE APLICA</h6> 
+                                </div>
+                                <div class="card-body">
+                                  <p>Quando o tratamento de dados é realizado <strong>exclusivamente</strong> para fins
+                                    jornalísticos,
+                                    artísticos, acadêmicos, segurança pública, defesa nacional, investigação e repressão de crimes.</p> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <ng-lottie [styles]="styles" [options]="options"></ng-lottie>
+                </div>
+            </div>
         </div>
     </div>
 </div>

@@ -1,23 +1,28 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-<div class="container">
-  <a class="navbar-brand" href="/">
-    <img class="logo img-fluid" src="assets/logo.png" alt="">
-  </a>
+<nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
+  <div class="container">
+    <a class="navbar-brand" [routerLink]="['/views']">
+      <img class="logo img-fluid" src="assets/logo.png" alt="">
+    </a>
 
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#conteudoNavbarSuportado"
-    aria-controls="conteudoNavbarSuportado" aria-expanded="false" aria-label="Alterna navegação">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#conteudoNavbarSuportado"
+      aria-controls="conteudoNavbarSuportado" aria-expanded="false" aria-label="Alterna navegação">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-  <div class="collapse navbar-collapse" id="conteudoNavbarSuportado">
-    <ul class="navbar-nav ms-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="/">Dashboard</a>
-      </li>
-    </ul>
-    <button class="btn btn-success ms-3" (click)="goLogin()">Login</button>
+    <div class="collapse navbar-collapse" id="conteudoNavbarSuportado">
+      <div class="buttons ms-auto">
+        <button class="btn btn-success" (click)="goLogin()">Login</button>
+        <button class="btn" (click)="logout()">Logout</button>
+      </div>
+
+    </div>
   </div>
-</div>
 </nav>
 
 <router-outlet></router-outlet>
+
+<footer class="footer fixed-bottom">
+  <div class="container text-center">
+    <span class="text-muted">PDAgro</span>
+  </div>
+</footer>
