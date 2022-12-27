@@ -8,6 +8,7 @@ export class StorageService {
   constructor() { }
 
   getToken() {
-    return localStorage.getItem('token')
+    return localStorage.getItem('auth.token')
   }
+
 }

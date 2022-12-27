@@ -7,20 +7,32 @@ import { ViewsComponent } from './views.component';
 import { DiagnosticComponent } from './diagnostic/diagnostic.component';
 import { LottieModule } from 'ngx-lottie';
 import player from 'lottie-web';
+import { CompanyComponent } from './company/company.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { IConfig, NgxMaskModule } from 'ngx-mask';
 
 export function playerFactory() {
   return player;
 }
 
+const maskConfig: () => Partial<IConfig> = () => {
+  return {
+    validation: false,
+  };
+};
+
 @NgModule({
   declarations: [
     HomeComponent,
     ViewsComponent,
-    DiagnosticComponent
+    DiagnosticComponent,
+    CompanyComponent
   ],
   imports: [
     CommonModule,
     ViewsRoutingModule,
+    ReactiveFormsModule,
+    NgxMaskModule.forRoot(maskConfig),
     LottieModule.forRoot({ player: playerFactory })
   ]
 })

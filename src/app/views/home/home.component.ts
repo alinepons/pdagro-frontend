@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { AnimationOptions } from 'ngx-lottie';
-import { User } from 'src/app/core/models/user';
+import { IUser } from 'src/app/core/models/user';
 import { AuthService } from 'src/app/core/service/auth.service';
 
 @Component({
@@ -15,11 +14,7 @@ export class HomeComponent implements OnInit {
     path: '/assets/animation/data.json',
   };
 
-  styles: Partial<CSSStyleDeclaration> = {
-
-  };
-
-  public user!: User
+  public user!: IUser
 
   constructor(private authService: AuthService) {
     this.authService.user.subscribe({

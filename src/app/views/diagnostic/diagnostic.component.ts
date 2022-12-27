@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ReplyService } from 'src/app/core/service/reply.service';
 
 @Component({
   selector: 'app-diagnostic',
@@ -7,9 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DiagnosticComponent implements OnInit {
 
-  constructor() { }
+  constructor(private replySrv: ReplyService) { }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+   const questions = await this.replySrv.getQuestions()
+   console.log(questions)
   }
 
 }

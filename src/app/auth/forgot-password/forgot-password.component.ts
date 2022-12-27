@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
-import { Auth } from "src/app/core/models/auth";
+import { IAuth } from "src/app/core/models/auth";
 import { AuthService } from "src/app/core/service/auth.service";
 
 
@@ -19,7 +19,7 @@ export class ForgotPasswordComponent implements OnInit {
   constructor(
     private router: Router,
     private fb: FormBuilder,
-    private toastService: ToastrService,
+    private toastSrv: ToastrService,
     private authService: AuthService) {
 
     this.formForgotPassword = this.fb.group({
@@ -47,27 +47,27 @@ export class ForgotPasswordComponent implements OnInit {
 
   resetPassword() {
     if (!this.formForgotPassword.valid) {
-      this.toastService.warning('Verifique os dados informados e tente novamente!', 'Redefinir senha')
+      this.toastSrv.warning('Verifique os dados informados e tente novamente!', 'Redefinir senha')
       return
     }
 
     if (this.password.value !== this.re_password.value) {
-      this.toastService.warning('As senhas não conferem!', 'Redefinir senha')
+      this.toastSrv.warning('As senhas não conferem!', 'Redefinir senha')
       return
     }
 
-    const model = new Auth({
+    const model: IAuth = {
       email: this.email.value,
       password: this.password.value,
       code: this.code.value
-    })
+    }
 
     this.authService.resetPassword(model)
   }
 
   forgotPassword() {
     if (!this.formForgotPassword.valid) {
-      this.toastService.warning('Verifique os dados informados e tente novamente!', 'Redefinir senha')
+      this.toastSrv.warning('Verifique os dados informados e tente novamente!', 'Redefinir senha')
       return
     }
 
@@ -76,14 +76,14 @@ export class ForgotPasswordComponent implements OnInit {
         next: (res: any) => {
           localStorage.setItem('auth.email', this.email.value)
           this.showCode = true
-          this.toastService.success(res.message, 'Redefinir senha', { timeOut: 10000 })
+          this.toastSrv.success(res.message, 'Redefinir senha', { timeOut: 10000 })
         },
         error: (err) => {
           if (err.error.message) {
-            this.toastService.error(err.error.message, 'Redefinir senha')
+            this.toastSrv.error(err.error.message, 'Redefinir senha')
             return
           }
-          this.toastService.error('Verifique sua conexão e tente novamente', 'Redefinir senha')
+          this.toastSrv.error('Verifique sua conexão e tente novamente', 'Redefinir senha')
         }
       })
   }

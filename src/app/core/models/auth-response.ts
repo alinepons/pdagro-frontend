@@ -1,10 +1,8 @@
-import { User } from "./user";
+import { ICompany } from "./company";
+import { IUser } from "./user";
 
-export class AuthResponse {
-    token: string = '';
-    user: User = {} as User
-
-    constructor(init: Partial<AuthResponse>) {
-        Object.assign(this, init);
-    }
+export interface IAuthResponse {
+    token: string
+    user: IUser
+    business: ICompany[]
 }

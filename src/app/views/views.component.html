@@ -11,8 +11,8 @@
 
     <div class="collapse navbar-collapse" id="conteudoNavbarSuportado">
       <div class="buttons ms-auto">
-        <button class="btn btn-success" (click)="goLogin()">Login</button>
-        <button class="btn" (click)="logout()">Logout</button>
+        <button class="btn btn-success" (click)="goLogin()" *ngIf="!authSrv.isAuthenticated">Login</button>
+        <button class="btn" (click)="logout()" *ngIf="authSrv.isAuthenticated">Logout</button>
       </div>
 
     </div>

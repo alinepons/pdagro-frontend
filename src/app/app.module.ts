@@ -20,7 +20,8 @@ import { TokenInterceptor } from "./core/interceptors/token.interceptor";
     ToastrModule.forRoot({
       progressBar : true,
       preventDuplicates: true,
-      timeOut: 3000
+      timeOut: 3000,
+      closeButton: true
     })
   ],
   providers: [

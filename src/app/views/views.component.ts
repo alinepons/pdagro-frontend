@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../core/service/auth.service';
 
 @Component({
   selector: 'app-views',
@@ -8,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class ViewsComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, public authSrv: AuthService) { }
 
   ngOnInit(): void {
   }
@@ -18,6 +19,6 @@ export class ViewsComponent implements OnInit {
   }
 
   logout() {
-    this.router.navigate(['views'])
+    this.authSrv.redirectLogoutUser()
   }
 }

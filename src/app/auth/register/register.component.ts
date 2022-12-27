@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { User } from 'src/app/core/models/user';
+import { IUser } from 'src/app/core/models/user';
 import { AuthService } from 'src/app/core/service/auth.service';
 
 @Component({
@@ -18,7 +18,7 @@ export class RegisterComponent implements OnInit {
     private router: Router,
     private fb: FormBuilder,
     private authService: AuthService,
-    private toastService: ToastrService) {
+    private toastSrv: ToastrService) {
 
     this.formRegister = this.fb.group({
       fullname: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
@@ -42,21 +42,21 @@ export class RegisterComponent implements OnInit {
   register() {
 
     if (!this.formRegister.valid) {
-      this.toastService.warning('Verifique os dados informados e tente novamente!', 'Cadastro')
+      this.toastSrv.warning('Verifique os dados informados e tente novamente!', 'Cadastro')
       return
     }
 
     if (this.password.value !== this.re_password.value) {
-      this.toastService.warning('As senhas não conferem!', 'Cadastro')
+      this.toastSrv.warning('As senhas não conferem!', 'Cadastro')
       return
     }
 
-    const model = new User({
+    const model: IUser = {
       fullname: this.fullname.value,
       email: this.email.value,
       password: this.password.value,
       cpf: this.cpf.value
-    })
+    }
 
     this.authService.register(model)
   }

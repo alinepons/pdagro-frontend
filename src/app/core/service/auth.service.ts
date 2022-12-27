@@ -2,11 +2,12 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
-import { BehaviorSubject, firstValueFrom, Observable, tap } from "rxjs";
+import { BehaviorSubject, Observable } from "rxjs";
 import { environment } from "src/environments/environment";
-import { Auth } from "../models/auth";
-import { AuthResponse } from "../models/auth-response";
-import { User } from "../models/user";
+import { IAuth } from "../models/auth";
+import { IAuthResponse } from "../models/auth-response";
+import { ICompany } from "../models/company";
+import { IUser } from "../models/user";
 
 
 @Injectable({
@@ -15,15 +16,22 @@ import { User } from "../models/user";
 export class AuthService {
 
   private URL: string = environment.URL_BASE;
-  private _user: BehaviorSubject<User | null> = new BehaviorSubject<User | null>(null)
-  public user: Observable<User | null> = this._user.asObservable()
+  private _user: BehaviorSubject<IUser | null> = new BehaviorSubject<IUser | null>(null)
+  public user: Observable<IUser | null> = this._user.asObservable()
 
-  constructor(private http: HttpClient, private router: Router, private toastService: ToastrService) {
+  private _businessUser: BehaviorSubject<ICompany[] | null> = new BehaviorSubject<ICompany[] | null>(null)
+  public businessUser: Observable<ICompany[] | null> = this._businessUser.asObservable()
+
+  constructor(private http: HttpClient, private router: Router, private toastSrv: ToastrService) {
 
   }
 
   get token(): string | null {
     return localStorage.getItem('auth.token')
+  }
+
+  get business(): string | null {
+    return localStorage.getItem('auth.business')
   }
 
   get isAuthenticated(): boolean {
@@ -36,23 +44,23 @@ export class AuthService {
    * @returns Retorna um Observable que emite true para autenticação com sucesso e false para falha na autenticação (usuário ou senha inválidos).
    * Caso retorne true, então também redireciona o usuário para a página solicitada.
    */
-  login(auth: Auth) {
-    return this.http.post<AuthResponse>(`${this.URL}auth/login`, auth)
+  login(auth: IAuth) {
+    return this.http.post<IAuthResponse>(`${this.URL}auth/login`, auth)
   }
 
-  register(user: User) {
+  register(user: IUser) {
     this.http.post(`${this.URL}auth/register`, user)
       .subscribe({
         next: (res) => {
           this.router.navigate(['auth']);
-          this.toastService.success('Cadastro realizado com sucesso!', 'Cadastro')
+          this.toastSrv.success('Cadastro realizado com sucesso!', 'Cadastro')
         },
         error: (err) => {
           if (err.error.message) {
-            this.toastService.error(err.error.message, 'Cadastro')
+            this.toastSrv.error(err.error.message, 'Cadastro')
             return
           }
-          this.toastService.error('Verifique sua conexão e tente novamente', 'Cadastro')
+          this.toastSrv.error('Verifique sua conexão e tente novamente', 'Cadastro')
         }
       })
   }
@@ -61,20 +69,20 @@ export class AuthService {
     return this.http.post(`${this.URL}auth/forgot-password`, { email })
   }
 
-  resetPassword(auth: Auth) {
+  resetPassword(auth: IAuth) {
     this.http.post(`${this.URL}auth/change-password`, auth)
       .subscribe({
         next: (res: any) => {
           this.router.navigate(['auth']);
           localStorage.removeItem('auth.email')
-          this.toastService.success(res.message, 'Redefinir senha')
+          this.toastSrv.success(res.message, 'Redefinir senha')
         },
         error: (err) => {
           if (err.error.message) {
-            this.toastService.error(err.error.message, 'Redefinir senha')
+            this.toastSrv.error(err.error.message, 'Redefinir senha')
             return
           }
-          this.toastService.error('Verifique sua conexão e tente novamente', 'Redefinir senha')
+          this.toastSrv.error('Verifique sua conexão e tente novamente', 'Redefinir senha')
         }
       })
   }
@@ -85,7 +93,7 @@ export class AuthService {
    * **O ideal seria salvar o caminho que o usuário solicitou e depois da autenticação redirecionar o usuário para o caminho salvo.
    * Mas pra fins de simplificação sempre redireciona o usuário para a tela inicial, após a autenticação.
    */
-  redirectLoginUser(res: AuthResponse) {
+  redirectLoginUser(res: IAuthResponse) {
     this._user.next(res.user)
     localStorage.setItem('auth.token', res.token)
     this.router.navigate(['views']);
@@ -93,7 +101,7 @@ export class AuthService {
 
   redirectLogoutUser() {
     localStorage.clear()
-    this.router.navigate(['auth']);
+    this.router.navigate(['views']);
   }
 
 }
