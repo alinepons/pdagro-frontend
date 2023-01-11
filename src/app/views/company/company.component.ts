@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CompanyService } from 'src/app/core/service/company.service';
+import { ReplyService } from 'src/app/core/service/reply.service';
 
 @Component({
   selector: 'app-company',
@@ -12,31 +13,37 @@ import { CompanyService } from 'src/app/core/service/company.service';
 export class CompanyComponent implements OnInit {
 
   formCompany: FormGroup
+  questionsCompany: any[] = []
 
   constructor(
     private router: Router,
     private fb: FormBuilder,
     private toastSrv: ToastrService,
-    private companySrv: CompanyService) {
+    private companySrv: CompanyService,
+    private replySrv: ReplyService
+  ) {
 
     this.formCompany = this.fb.group({
       name: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
-      email: ['', Validators.compose([Validators.required, Validators.pattern('^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+).(\.[a-z]{2,3})$')])],
-      phone: ['', Validators.compose([Validators.required, Validators.minLength(14), Validators.maxLength(15)])],
       cnpj: ['', Validators.compose([Validators.required, Validators.minLength(18), Validators.maxLength(18)])],
-      website: ['']
     })
   }
 
   ngOnInit(): void {
 
+    this.replySrv.getQuestions()
+      .then((res) => {
+        this.questionsCompany = res[0].items
+        console.log(this.questionsCompany)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   }
 
   get name() { return this.formCompany.get('name')! };
-  get email() { return this.formCompany.get('email')! };
-  get phone() { return this.formCompany.get('phone')! };
   get cnpj() { return this.formCompany.get('cnpj')! };
-  get website() { return this.formCompany.get('website')! };
+
 
 
   createCompany() {

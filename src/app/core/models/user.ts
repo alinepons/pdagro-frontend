@@ -5,6 +5,6 @@ export interface IUser {
     fullname: string
     password: string
     email: string
-    cpf: string
+    accept?: boolean
     company?: ICompany[]
 }

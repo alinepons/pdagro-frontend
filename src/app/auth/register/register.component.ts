@@ -13,19 +13,20 @@ import { AuthService } from 'src/app/core/service/auth.service';
 export class RegisterComponent implements OnInit {
 
   formRegister: FormGroup
+  accept: boolean = false
 
   constructor(
     private router: Router,
     private fb: FormBuilder,
     private authService: AuthService,
-    private toastSrv: ToastrService) {
+    private toastSrv: ToastrService
+  ) {
 
     this.formRegister = this.fb.group({
       fullname: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
       email: ['', Validators.compose([Validators.required, Validators.pattern('^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+).(\.[a-z]{2,3})$')])],
       password: ['', Validators.compose([Validators.required, Validators.minLength(6)])],
       re_password: ['', Validators.compose([Validators.required, Validators.minLength(6)])],
-      cpf: ['', Validators.compose([Validators.required])]
     })
 
   }
@@ -37,12 +38,16 @@ export class RegisterComponent implements OnInit {
   get email(): AbstractControl { return this.formRegister.get('email')! };
   get password(): AbstractControl { return this.formRegister.get('password')! };
   get re_password(): AbstractControl { return this.formRegister.get('re_password')! };
-  get cpf(): AbstractControl { return this.formRegister.get('cpf')! };
 
   register() {
 
     if (!this.formRegister.valid) {
       this.toastSrv.warning('Verifique os dados informados e tente novamente!', 'Cadastro')
+      return
+    }
+
+    if (!this.accept) {
+      this.toastSrv.warning('É necessário estar de acordo e aceitar as regras informadas!', 'Cadastro')
       return
     }
 
@@ -54,8 +59,7 @@ export class RegisterComponent implements OnInit {
     const model: IUser = {
       fullname: this.fullname.value,
       email: this.email.value,
-      password: this.password.value,
-      cpf: this.cpf.value
+      password: this.password.value
     }
 
     this.authService.register(model)

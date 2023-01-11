@@ -1,60 +1,34 @@
-<div class="container my-4 py-4 h-100">
-    <div class="row mt-5">
+<div class="container my-4 py-4">
+    <div class="row my-5">
         <div class="col-md-12">
-            <div class="">
+           
                 <h4>Cadastre sua empresa</h4>
                 <div class="row">
                     <div class="col-md-12 mt-4">
 
                         <form [formGroup]="formCompany" (ngSubmit)="createCompany()">
 
-                            <div class="mb-3">
-                                <label for="name">Nome ou Razão Social:</label>
-                                <input class="form-control form-control-sm" aria-label="Nome ou Razão Social"
-                                    formControlName="name">
-                                <div *ngIf="name.invalid && (name.dirty || name.touched)" class="field-alert">
-                                    <div *ngIf="name.errors?.['required']">
-                                        Este campo é obrigatório
-                                    </div>
-                                    <div *ngIf="name.errors?.['minlength']">
-                                        Nome ou Razão Social muito curto
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="email">E-mail:</label>
-                                <input type="email" class="form-control form-control-sm" aria-label="E-mail"
-                                    formControlName="email">
-                                <div *ngIf="email.invalid && (email.dirty || email.touched)" class="field-alert">
-                                    <div *ngIf="email.errors?.['required']">
-                                        Este campo é obrigatório
-                                    </div>
-                                    <div *ngIf="email.errors?.['pattern']">
-                                        E-mail em formato incorreto
-                                    </div>
-                                </div>
-                            </div>
-
                             <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label for="phone">Telefone:</label>
-                                    <input type="tel" class="form-control form-control-sm" aria-label="Telefone"
-                                     formControlName="phone" [dropSpecialCharacters]="false" mask="(00) 0000-0000||(00) 00000-0000">
-                                    <div *ngIf="phone.invalid && (phone.dirty || phone.touched)" class="field-alert">
-                                        <div *ngIf="phone.errors?.['required']">
+                                <div class="col-md-8 mb-3">
+                                    <label for="name">Nome ou Razão Social:</label>
+                                    <input class="form-control form-control-sm" aria-label="Nome ou Razão Social"
+                                        formControlName="name">
+                                    <div *ngIf="name.invalid && (name.dirty || name.touched)" class="field-alert">
+                                        <div *ngIf="name.errors?.['required']">
                                             Este campo é obrigatório
                                         </div>
-                                        <div *ngIf="phone.errors?.['minlength']">
-                                            Telefone em formato incorreto
+                                        <div *ngIf="name.errors?.['minlength']">
+                                            Nome ou Razão Social muito curto
                                         </div>
                                     </div>
                                 </div>
-                                
-                                <div class="col-md-6 mb-3">
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
                                     <label for="cnpj">CNPJ:</label>
                                     <input type="tel" class="form-control form-control-sm" aria-label="CNPJ"
-                                         formControlName="cnpj" [dropSpecialCharacters]="false"  mask="00.000.000/0000-00">
+                                        formControlName="cnpj" [dropSpecialCharacters]="false"
+                                        mask="00.000.000/0000-00">
                                     <div *ngIf="cnpj.invalid && (cnpj.dirty || cnpj.touched)" class="field-alert">
                                         <div *ngIf="cnpj.errors?.['required']">
                                             Este campo é obrigatório
@@ -66,20 +40,48 @@
                                 </div>
                             </div>
 
-                            <div class="mb-3">
-                                <label for="website">Website:</label>
-                                <input class="form-control form-control-sm" aria-label="Website" formControlName="website">
+
+                            <div class="row">
+                                <div class="col-md-12 mb-3" *ngFor="let item of questionsCompany">
+                                    <p>{{item._id}}) {{item.title}}</p>
+                                    <p class="comment" *ngIf="item.comment">{{item.comment}}</p>
+                                    <ng-container *ngIf="item.type === 'radio'">
+                                        <form [id]="item._id">
+                                            <div class="form-check">
+                                                <div *ngFor="let option of item.options">
+                                                    <input class="form-check-input" type="radio"
+                                                        [name]="item._id+'_'+option._id" [id]="item._id+'_'+option._id">
+                                                    <label class="form-check-label" [for]="item._id+'_'+option._id">
+                                                        {{ option.text }}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </ng-container>
+                                    <ng-container *ngIf="item.type === 'text'">
+                                        <form [id]="item._id">
+                                            <div class="row">
+                                                <div class="col-md-8">
+                                                    <input class="form-control form-control-sm" [name]="item._id+'_1'">
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </ng-container>
+                                </div>
+
                             </div>
 
+
                             <div class="buttons mt-4">
-                                <button type="submit" class="btn btn-sm btn-success px-3" [disabled]="formCompany.invalid">Cadastrar empresa</button>
+                                <button type="submit" class="btn btn-sm btn-success px-3"
+                                    [disabled]="formCompany.invalid">Cadastrar empresa</button>
                             </div>
 
                         </form>
 
                     </div>
                 </div>
-            </div>
+           
         </div>
     </div>
 </div>

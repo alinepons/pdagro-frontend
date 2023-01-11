@@ -1,14 +1,14 @@
 <div class="container">
 
     <div class="row mt-5">
-        <div class="col-12 col-md-6 col-lg-4 mx-auto text-center">
+        <div class="col-12 col-md-6 mx-auto text-center">
             <img src="assets/logo.png" alt="Logomarca" class="logo img-fluid">
             <h6 class="">Verificação de conformidade à LGPD</h6>
             <h3 class="my-4">CADASTRO</h3>
         </div>
     </div>
     <div class="row mt-3">
-        <div class="col-12 col-md-6 col-lg-4 mx-auto">
+        <div class="col-12 col-md-6 mx-auto">
             <form [formGroup]="formRegister" (ngSubmit)="register()">
                 <div class="mb-3">
                     <div class="input-group input-group-sm">
@@ -29,23 +29,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="mb-3">
-                    <div class="input-group input-group-sm">
-                        <span class="input-group-text">
-                            <i class="fa fa-id-card"></i>
-                        </span>
-                        <input type="tel" formControlName="cpf" class="form-control form-control-sm"
-                            placeholder="CPF" aria-label="CPF">
-                    </div>
-                    <div *ngIf="cpf.invalid && (cpf.dirty || cpf.touched)" class="field-alert">
-                        <div *ngIf="cpf.errors?.['required']">
-                            Este campo é obrigatório
-                        </div>
-                        <div *ngIf="cpf.errors?.['pattern']">
-                            CPF com formato inválido
-                        </div>
-                    </div>
-                </div>
+                
                 <div class="mb-3">
                     <div class="input-group input-group-sm">
                         <span class="input-group-text">
@@ -66,7 +50,7 @@
                 <div class="mb-3">
                     <div class="input-group input-group-sm">
                         <span class="input-group-text">
-                           <i class="fa fa-lock"></i>
+                            <i class="fa fa-lock"></i>
                         </span>
                         <input type="password" formControlName="password" class="form-control" placeholder="Senha"
                             aria-label="Senha">
@@ -103,9 +87,33 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="authorization border rounded">
+
+                    <p class="m-0">
+                        O acesso na ferramenta PdAgro solicita apenas os dados pessoais de nome, e-mail e senha do
+                        responsável pela empresa.
+                        As informações fornecidas pelo usuário poderão ser usadas para fins de
+                        pesquisa no presente projeto de dissertação, realizado no PPGCAP - Programa de Pós-Graduação em
+                        Computação Aplicada - UNIPAMPA e EMBRAPA Pecuária Sul, sem que haja qualquer tipo de
+                        identificação
+                        do usuário.
+                    </p>
+
+                    <div class="d-flex align-items-center mt-2">
+                        <input class="form-check-input" type="checkbox" [(ngModel)]="accept"
+                            [ngModelOptions]="{standalone: true}" [checked]="accept" [value]="accept">
+                        <p class="m-0 ms-2">Estou ciente e aceito participar nessas condições.</p>
+                    </div>
+
+                </div>
+
                 <div class="buttons mt-4">
-                    <button type="submit" class="btn btn-sm btn-success px-3" [disabled]="formRegister.invalid">Criar cadastro</button>
-                    <button type="button" class="btn mt-3" (click)="goLogin()">Já possui conta? Login</button>
+                    <button type="submit" class="btn btn-sm btn-success px-3"
+                        [disabled]="formRegister.invalid || !accept">
+                        Criar cadastro
+                    </button>
+                    <button type="button" class="btn mt-3" (click)="goLogin()">Já possui conta? Fazer Login</button>
 
                 </div>
 

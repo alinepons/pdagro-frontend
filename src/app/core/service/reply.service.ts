@@ -1,7 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 import { firstValueFrom } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { IQuestions } from '../models/question';
@@ -13,7 +11,7 @@ export class ReplyService {
 
   private URL: string = environment.URL_BASE;
 
-  constructor(private http: HttpClient, private router: Router, private toastSrv: ToastrService) {
+  constructor(private http: HttpClient) {
 
   }
 

@@ -5,7 +5,7 @@ import { AuthRoutingModule } from './auth-routing.module';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IConfig, NgxMaskModule } from 'ngx-mask';
 
 const maskConfig: () => Partial<IConfig> = () => {
@@ -23,6 +23,7 @@ const maskConfig: () => Partial<IConfig> = () => {
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    FormsModule,
     AuthRoutingModule,
     NgxMaskModule.forRoot(maskConfig),
   ]
