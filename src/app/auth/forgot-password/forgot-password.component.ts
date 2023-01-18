@@ -15,6 +15,7 @@ export class ForgotPasswordComponent implements OnInit {
 
   formForgotPassword: FormGroup
   showCode: boolean = false
+  loading: boolean = false
 
   constructor(
     private router: Router,
@@ -42,10 +43,18 @@ export class ForgotPasswordComponent implements OnInit {
     if (emailTemp) {
       this.email.setValue(emailTemp)
       this.showCode = true
+
+      this.password.setValidators([Validators.required]);
+      this.password.updateValueAndValidity()
+      this.re_password.setValidators([Validators.required]);
+      this.re_password.updateValueAndValidity()
+      this.code.setValidators([Validators.required]);
+      this.code.updateValueAndValidity()
     }
   }
 
   resetPassword() {
+
     if (!this.formForgotPassword.valid) {
       this.toastSrv.warning('Verifique os dados informados e tente novamente!', 'Redefinir senha')
       return
@@ -61,30 +70,56 @@ export class ForgotPasswordComponent implements OnInit {
       password: this.password.value,
       code: this.code.value
     }
+    this.loading = true
 
     this.authService.resetPassword(model)
+      .then((res: any) => {
+        this.router.navigate(['auth']);
+        localStorage.removeItem('auth.email')
+        this.toastSrv.success(res.message, 'Redefinir senha')
+        this.loading = false
+      })
+      .catch((err) => {
+        this.loading = false
+        if (err.error.message) {
+          this.toastSrv.error(err.error.message, 'Redefinir senha')
+          return
+        }
+        this.toastSrv.error('Verifique sua conexão e tente novamente', 'Redefinir senha')
+      })
   }
 
   forgotPassword() {
+
     if (!this.formForgotPassword.valid) {
       this.toastSrv.warning('Verifique os dados informados e tente novamente!', 'Redefinir senha')
       return
     }
 
+    this.loading = true
+
     this.authService.forgotPassword(this.email.value)
-      .subscribe({
-        next: (res: any) => {
-          localStorage.setItem('auth.email', this.email.value)
-          this.showCode = true
-          this.toastSrv.success(res.message, 'Redefinir senha', { timeOut: 10000 })
-        },
-        error: (err) => {
-          if (err.error.message) {
-            this.toastSrv.error(err.error.message, 'Redefinir senha')
-            return
-          }
-          this.toastSrv.error('Verifique sua conexão e tente novamente', 'Redefinir senha')
+      .then((res: any) => {
+        localStorage.setItem('auth.email', this.email.value)
+        this.showCode = true
+        this.toastSrv.success(res.message, 'Redefinir senha', { timeOut: 10000 })
+
+        this.password.setValidators([Validators.required]);
+        this.password.updateValueAndValidity()
+        this.re_password.setValidators([Validators.required]);
+        this.re_password.updateValueAndValidity()
+        this.code.setValidators([Validators.required]);
+        this.code.updateValueAndValidity()
+
+        this.loading = false
+      })
+      .catch((err) => {
+        this.loading = false
+        if (err.error.message) {
+          this.toastSrv.error(err.error.message, 'Redefinir senha')
+          return
         }
+        this.toastSrv.error('Verifique sua conexão e tente novamente', 'Redefinir senha')
       })
   }
 

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from '../core/guards/auth.guard';
 import { CompanyGuard } from '../core/guards/company.guard';
 import { CompanyComponent } from './company/company.component';
 import { DiagnosticComponent } from './diagnostic/diagnostic.component';
@@ -17,13 +18,14 @@ const routes: Routes = [
         component: HomeComponent
       },
       {
-        path: 'diagnostic',
+        path: 'diagnostic/:id',
         component: DiagnosticComponent,
-        canActivate: [CompanyGuard]
+        canActivate: [AuthGuard]
       },
       {
         path: 'company',
-        component: CompanyComponent
+        component: CompanyComponent,
+        canActivate: [CompanyGuard]
       }
     ]
   }

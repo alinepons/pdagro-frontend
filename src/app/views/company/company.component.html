@@ -1,87 +1,143 @@
-<div class="container my-4 py-4">
+<div class="container my-4">
     <div class="row my-5">
-        <div class="col-md-12">
-           
-                <h4>Cadastre sua empresa</h4>
-                <div class="row">
-                    <div class="col-md-12 mt-4">
 
-                        <form [formGroup]="formCompany" (ngSubmit)="createCompany()">
+        <div class="col-md-12" *ngIf="view === 'LIST'">
 
-                            <div class="row">
-                                <div class="col-md-8 mb-3">
-                                    <label for="name">Nome ou Razão Social:</label>
-                                    <input class="form-control form-control-sm" aria-label="Nome ou Razão Social"
-                                        formControlName="name">
-                                    <div *ngIf="name.invalid && (name.dirty || name.touched)" class="field-alert">
-                                        <div *ngIf="name.errors?.['required']">
-                                            Este campo é obrigatório
-                                        </div>
-                                        <div *ngIf="name.errors?.['minlength']">
-                                            Nome ou Razão Social muito curto
-                                        </div>
-                                    </div>
+            <div class="d-flex align-items-center justify-content-between mb-4">
+                <h4 class="m-0">Empresas cadastradas</h4>
+                <button class="btn btn-sm btn-outline-success px-2 m-0" (click)="view = 'INSERT'"><i
+                        class="fa fa-plus me-2"></i>Adicionar</button>
+
+            </div>
+            <div class="row">
+                <div class="col-md-12 mb-4" *ngFor="let item of company">
+                    <div class="card">
+                        <div class="card-body company">
+                            <div>
+                                <div class="d-flex">
+                                    <p class="fw-bold">Empresa:</p>
+                                    <p class="ms-2">{{item.name}}</p>
+                                </div>
+                                <div class="d-flex">
+                                    <p class="fw-bold">CNPJ:</p>
+                                    <p class="ms-2">{{item.cnpj}}</p>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-4 mb-3">
-                                    <label for="cnpj">CNPJ:</label>
-                                    <input type="tel" class="form-control form-control-sm" aria-label="CNPJ"
-                                        formControlName="cnpj" [dropSpecialCharacters]="false"
-                                        mask="00.000.000/0000-00">
-                                    <div *ngIf="cnpj.invalid && (cnpj.dirty || cnpj.touched)" class="field-alert">
-                                        <div *ngIf="cnpj.errors?.['required']">
-                                            Este campo é obrigatório
-                                        </div>
-                                        <div *ngIf="cnpj.errors?.['minlength']">
-                                            CNPJ em formato incorreto
-                                        </div>
-                                    </div>
+
+                            <div *ngIf="item.diagnostic.length > 0" class="mt-3">
+                                <div class="resultDiagnostic" *ngFor="let d of item.diagnostic; let i = index">
+                                    <span class="btnLink" (click)="openDiagnostic(item, d)">
+                                        <i class="fa fa-up-right-from-square me-1"></i>
+                                        Diagnóstico {{i+1}} - [{{d.created_at | date : 'dd/MM/yyyy HH:mm'}}]
+                                    </span>
                                 </div>
                             </div>
 
 
-                            <div class="row">
-                                <div class="col-md-12 mb-3" *ngFor="let item of questionsCompany">
-                                    <p>{{item._id}}) {{item.title}}</p>
-                                    <p class="comment" *ngIf="item.comment">{{item.comment}}</p>
-                                    <ng-container *ngIf="item.type === 'radio'">
-                                        <form [id]="item._id">
-                                            <div class="form-check">
-                                                <div *ngFor="let option of item.options">
-                                                    <input class="form-check-input" type="radio"
-                                                        [name]="item._id+'_'+option._id" [id]="item._id+'_'+option._id">
-                                                    <label class="form-check-label" [for]="item._id+'_'+option._id">
-                                                        {{ option.text }}
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </ng-container>
-                                    <ng-container *ngIf="item.type === 'text'">
-                                        <form [id]="item._id">
-                                            <div class="row">
-                                                <div class="col-md-8">
-                                                    <input class="form-control form-control-sm" [name]="item._id+'_1'">
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </ng-container>
-                                </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class=" d-flex align-items-center justify-content-between">
+                                <button class="btn btn-secondary btn-sm px-3"
+                                    [routerLink]="['/views/diagnostic', item.id]">
+                                    <i class="fa fa-stethoscope"></i>
+                                    Diagnóstico
+                                </button>
 
+                                <button class="btn btn-danger btn-sm px-2" (click)="deleteCompany(item.id)">
+                                    <i class="fa fa-trash-can"></i>
+                                </button>
                             </div>
-
-
-                            <div class="buttons mt-4">
-                                <button type="submit" class="btn btn-sm btn-success px-3"
-                                    [disabled]="formCompany.invalid">Cadastrar empresa</button>
-                            </div>
-
-                        </form>
-
+                        </div>
                     </div>
                 </div>
-           
+            </div>
+
+        </div>
+
+        <div class="col-md-12 mb-5" *ngIf="view === 'INSERT'">
+            <h4>Cadastre sua empresa</h4>
+            <div class="row" *ngIf="questionsCompany.length === 0">
+                <div class="col mt-4">
+                    <span class="alert alert-warning p-1 px-3">
+                        <i class="fa-solid fa-triangle-exclamation me-1"></i>
+                        Ocorreu um erro ao carregar o formulário. Verifique sua conexão e tente novamente!
+                    </span>
+                </div>
+            </div>
+            <div class="row" *ngIf="questionsCompany.length > 0">
+                <div class="col-md-12 mt-4">
+                    <form [formGroup]="formCompany">
+                        <div class="row">
+                            <div class="col-md-8 mb-3">
+                                <label for="name">Nome ou Razão Social:</label>
+                                <input class="form-control form-control-sm" aria-label="Nome ou Razão Social"
+                                    formControlName="name">
+                                <div *ngIf="name.invalid && (name.dirty || name.touched)" class="field-alert">
+                                    <div *ngIf="name.errors?.['required']">
+                                        Este campo é obrigatório
+                                    </div>
+                                    <div *ngIf="name.errors?.['minlength']">
+                                        Nome ou Razão Social muito curto
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label for="cnpj">CNPJ:</label>
+                                <input type="tel" class="form-control form-control-sm" aria-label="CNPJ"
+                                    formControlName="cnpj" [dropSpecialCharacters]="false" mask="00.000.000/0000-00">
+                                <div *ngIf="cnpj.invalid && (cnpj.dirty || cnpj.touched)" class="field-alert">
+                                    <div *ngIf="cnpj.errors?.['required']">
+                                        Este campo é obrigatório
+                                    </div>
+                                    <div *ngIf="cnpj.errors?.['minlength']">
+                                        CNPJ em formato incorreto
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <form [formGroup]="formQuestions">
+                        <div class="row">
+                            <div class="col-md-12 mb-3" *ngFor="let item of questionsCompany">
+                                <p>{{item._id}}) {{item.title}}</p>
+                                <p class="comment" *ngIf="item.comment">{{item.comment}}</p>
+                                <ng-container *ngIf="item.type === 'radio'">
+                                    <div *ngFor="let option of item.options">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input me-2" type="radio" [value]="option.text"
+                                                [formControlName]="'question_'+ item._id">
+                                            <span>{{option.text}}</span>
+                                        </label>
+                                    </div>
+                                </ng-container>
+                                <ng-container *ngIf="item.type === 'checkbox'">
+                                    <div *ngFor="let option of item.options; let i = index">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input me-2" type="checkbox" [value]="option.text"
+                                                [checked]="option.text === activityOptions[i]"
+                                                (change)="onCheckChange($event, item)">
+                                            <span>{{option.text}}</span>
+                                        </label>
+                                    </div>
+                                </ng-container>
+                                <ng-container *ngIf="item.type === 'text'">
+                                    <input class="form-control form-control-sm"
+                                        [formControlName]="'question_'+ item._id">
+                                </ng-container>
+                            </div>
+                            <div class="buttons mt-4">
+                                <button type="reset" class="btn btn-sm btn-outline-danger px-3 m-0 me-2"
+                                    (click)="cancelForm()">Cancelar</button>
+
+                                <button type="button" class="btn btn-sm btn-success px-3" (click)="createCompany()"
+                                    [disabled]="formCompany.invalid || formQuestions.invalid">Cadastrar empresa</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </div>

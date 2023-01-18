@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { FormGroup, Validators, FormControl } from '@angular/forms';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
+import { ModalResultComponent } from 'src/app/components/modal-result/modal-result.component';
+import { ICompany } from 'src/app/core/models/company';
 import { CompanyService } from 'src/app/core/service/company.service';
-import { ReplyService } from 'src/app/core/service/reply.service';
+import { DiagnosticService } from 'src/app/core/service/diagnostic.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-company',
@@ -12,29 +15,38 @@ import { ReplyService } from 'src/app/core/service/reply.service';
 })
 export class CompanyComponent implements OnInit {
 
-  formCompany: FormGroup
+  formCompany: FormGroup = new FormGroup({})
+  formQuestions: FormGroup = new FormGroup({})
   questionsCompany: any[] = []
+  activityOptions: string[] = []
+
+  view: string = 'LIST'
+
+  company: any[] = []
 
   constructor(
-    private router: Router,
-    private fb: FormBuilder,
     private toastSrv: ToastrService,
     private companySrv: CompanyService,
-    private replySrv: ReplyService
+    private diagnosticSrv: DiagnosticService,
+    private modalService: NgbModal,
+    public activeModal: NgbActiveModal
   ) {
 
-    this.formCompany = this.fb.group({
-      name: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
-      cnpj: ['', Validators.compose([Validators.required, Validators.minLength(18), Validators.maxLength(18)])],
-    })
+    this.formCompany.addControl('name', new FormControl(null, Validators.compose([Validators.required, Validators.minLength(3)])))
+    this.formCompany.addControl('cnpj', new FormControl(null, Validators.compose([Validators.required, Validators.minLength(18), Validators.maxLength(18)])))
   }
 
   ngOnInit(): void {
 
-    this.replySrv.getQuestions()
+    this.getQuestions()
+    this.getCompany()
+  }
+
+  getQuestions() {
+    this.diagnosticSrv.getQuestions()
       .then((res) => {
         this.questionsCompany = res[0].items
-        console.log(this.questionsCompany)
+        this.generateFormQuestions(this.questionsCompany)
       })
       .catch((err) => {
         console.log(err)
@@ -44,14 +56,41 @@ export class CompanyComponent implements OnInit {
   get name() { return this.formCompany.get('name')! };
   get cnpj() { return this.formCompany.get('cnpj')! };
 
+  generateFormQuestions(data: any[]) {
+    data.forEach((item) => {
+      this.formQuestions.addControl(`question_${item._id}`, new FormControl(null, Validators.compose([Validators.required, Validators.minLength(3)])))
+    })
+  }
 
+  getCompany() {
+    this.companySrv.getCompany()
+      .then((res: any) => {
+        this.company = res
+      })
+  }
+
+  cancelForm() {
+    this.view = 'LIST'
+    this.activityOptions = []
+    this.formCompany.reset()
+    this.formQuestions.reset()
+  }
 
   createCompany() {
-    if (this.formCompany.valid) {
-      this.companySrv.createCompany(this.formCompany.value)
+    if (this.formCompany.valid && this.formQuestions.valid) {
+
+      const data: ICompany = {
+        name: this.name.value,
+        cnpj: this.cnpj.value,
+        info: this.formQuestions.value
+      }
+
+      this.companySrv.createCompany(data)
         .subscribe({
           next: (res: any) => {
-            console.log(res)
+            this.toastSrv.success('Empresa cadastrada com sucesso!', 'PDAgro')
+            this.getCompany()
+            this.cancelForm()
           },
           error: (err) => {
             console.log(err)
@@ -65,7 +104,55 @@ export class CompanyComponent implements OnInit {
     } else {
       this.toastSrv.warning('Verifique os dados informados e tente novamente', 'PDAgro')
     }
+  }
 
+  onCheckChange(ev: any, item: any) {
+    /* Selected */
+    if (ev.target.checked) {
+      this.activityOptions.push(ev.target.value)
+    }
+    /* unselected */
+    else {
+      let i = this.activityOptions.findIndex(a => a === ev.target.value)
+      this.activityOptions.splice(i, 1)
+    }
+    this.formQuestions.get(`question_${item._id}`)?.setValue(JSON.stringify(this.activityOptions))
+  }
+
+  deleteCompany(id: any) {
+    Swal.fire({
+      title: 'Atenção',
+      text: "Excluir empresa e diagnósticos relacionados?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sim, excluir!',
+      cancelButtonText: 'Cancelar',
+      focusCancel: true,
+      showClass: {
+        popup: 'animate__animated animate__fadeInDown animate__faster'
+      },
+      hideClass: {
+        popup: 'animate__animated animate__fadeOutUp animate__faster'
+      }
+    }).then((result) => {
+      if (result.isConfirmed) {
+
+
+
+      }
+    })
+  }
+
+  openDiagnostic(company: any, diagnostic: any) {
+    const data = {
+      name: company.name,
+      cnpj: company.cnpj,
+      diagnostic
+    }
+    const modalRef = this.modalService.open(ModalResultComponent, { size: 'xl', keyboard: false });
+    modalRef.componentInstance.data = data
   }
 
 }

@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container py-5">
 
     <div class="row mt-5">
         <div class="col-12 col-md-6 mx-auto text-center">
@@ -29,7 +29,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="mb-3">
                     <div class="input-group input-group-sm">
                         <span class="input-group-text">
@@ -109,9 +109,10 @@
                 </div>
 
                 <div class="buttons mt-4">
-                    <button type="submit" class="btn btn-sm btn-success px-3"
-                        [disabled]="formRegister.invalid || !accept">
-                        Criar cadastro
+                    <button type="submit" [disabled]="loading || formRegister.invalid || !accept"
+                        class="btn btn-sm btn-success px-3 d-flex align-items-center">
+                        <span class="spinner-border spinner-border-sm me-2" *ngIf="loading"></span>
+                        <span>Criar conta</span>
                     </button>
                     <button type="button" class="btn mt-3" (click)="goLogin()">Já possui conta? Fazer Login</button>
 

@@ -1,0 +1,38 @@
+.result{
+
+.resultItem{
+    border-left: 4px solid #015a4d40;
+    padding: 10px;
+    border-radius: 4px;
+
+    .question {
+        font-size: 14px;
+        margin-bottom: 5px;
+    } 
+    .reply {
+        margin: 0;
+        font-size: 12px;
+
+        .fa {
+            transform: rotate(180deg);
+        }
+        span {
+            font-weight: 500;
+        }
+    }   
+    .feedback {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        align-items: center;
+
+        .fa {
+            margin-right: 12px;
+        }
+
+        p {
+            font-size: 14px;
+        }
+    }
+}
+
+}

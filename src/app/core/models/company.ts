@@ -1,8 +1,15 @@
 export interface ICompany {
-    id: string
+    id?: string
+    user?: string
     name: string
-    email: string
-    phone: string
     cnpj: string
-    website?: string
+    info: any
+}
+
+export interface ICompanyResponse {
+    id: string
+    user: string
+    name: string
+    cnpj: string
+    info: any
 }

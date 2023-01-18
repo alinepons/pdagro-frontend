@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container py-5">
 
     <div class="row mt-5">
         <div class="col-12 col-md-6 col-lg-4 mx-auto text-center">
@@ -15,7 +15,8 @@
                         <span class="input-group-text">
                             <i class="fa fa-envelope"></i>
                         </span>
-                        <input type="email" class="form-control form-control-sm" placeholder="Email" aria-label="Email" formControlName="email">
+                        <input type="email" autocomplete="off" class="form-control form-control-sm" placeholder="Email"
+                            aria-label="Email" formControlName="email">
                     </div>
                     <div *ngIf="email.invalid && (email.dirty || email.touched)" class="field-alert">
                         <div *ngIf="email.errors?.['required']">
@@ -29,10 +30,10 @@
                         <span class="input-group-text">
                             <i class="fa fa-lock"></i>
                         </span>
-                        <input type="password" class="form-control form-control-sm" placeholder="Senha" aria-label="Senha" formControlName="password">
+                        <input type="password" autocomplete="off" class="form-control form-control-sm"
+                            placeholder="Senha" aria-label="Senha" formControlName="password">
                     </div>
-                    <div *ngIf="password.invalid && (password.dirty || password.touched)"
-                        class="field-alert">
+                    <div *ngIf="password.invalid && (password.dirty || password.touched)" class="field-alert">
                         <div *ngIf="password.errors?.['required']">
                             Este campo é obrigatório
                         </div>
@@ -44,10 +45,11 @@
                         <span class="input-group-text">
                             <i class="fa fa-key"></i>
                         </span>
-                        <input type="tel" mask="000000" maxlength="6" class="form-control form-control-sm" placeholder="Código de ativação" aria-label="Código de ativação" formControlName="code">
+                        <input type="tel" autocomplete="off" mask="000000" maxlength="6"
+                            class="form-control form-control-sm" placeholder="Código de ativação"
+                            aria-label="Código de ativação" formControlName="code">
                     </div>
-                    <div *ngIf="code.invalid && (code.dirty || code.touched)"
-                        class="field-alert">
+                    <div *ngIf="code.invalid && (code.dirty || code.touched)" class="field-alert">
                         <div *ngIf="code.errors?.['required']">
                             Este campo é obrigatório
                         </div>
@@ -55,12 +57,17 @@
                 </div>
 
                 <div class="buttons mt-4">
-                    <button type="button" *ngIf="showCode" class="btn mb-3" (click)="goForgotPassword()">Não recebeu o código de ativação? Clique aqui</button>
+                    <button type="button" *ngIf="showCode" class="btn mb-3" (click)="goForgotPassword()">Não recebeu o
+                        código de ativação? Clique aqui</button>
 
-                    <button type="submit" class="btn btn-sm btn-success px-3">Entrar</button>
+                    <button type="submit" [disabled]="loading || formLogin.invalid"
+                        class="btn btn-sm btn-success px-3 d-flex align-items-center">
+                        <span class="spinner-border spinner-border-sm me-2" *ngIf="loading"></span>
+                        <span>Entrar</span>
+                    </button>
 
                     <button type="button" class="btn mt-3" (click)="goForgotPassword()">Esqueci minha senha</button>
-   
+
                     <button type="button" class="btn" (click)="goRegister()">Não possui conta? Cadastre-se</button>
                 </div>
 

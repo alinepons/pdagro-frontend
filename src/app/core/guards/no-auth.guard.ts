@@ -14,11 +14,11 @@ export class NoAuthGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-      console.log('NoAuthGuard')
-    if(this.authSrv.isAuthenticated) {
-      return false
+    console.log('NoAuthGuard')
+    if (this.authSrv.isAuthenticated) {
+      return this.router.navigate(['views']);
     }
-    return this.router.createUrlTree(['views']);
+    return true
   }
-  
+
 }

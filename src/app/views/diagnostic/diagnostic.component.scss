@@ -1,9 +1,7 @@
 
-/*Hide all except first fieldset*/
-#msform fieldset:not(:first-of-type) {
-    display: none;
+.fs-title {
+    margin-bottom: 16px;
 }
-
 /*progressbar*/
 #progressbar {
     margin-bottom: 30px;
@@ -29,7 +27,7 @@
     content: "\f570";
 }
 
-#progressbar #rule:before {
+#progressbar #law:before {
     font-family: FontAwesome;
     content: "\f24e";
 }
@@ -73,4 +71,17 @@
 /*Color number of the step and the connector before it*/
 #progressbar li.active:before, #progressbar li.active:after {
     background: green;
+}
+
+.comment {
+    font-size: 13px;
+    font-style: italic;
+    border-left: 4px solid #4EB755;
+    border-radius: 4px 0 0 4px;
+    padding: 4px 10px;
+    background-color: rgb(245, 245, 245);
+}
+
+.form-check-label {
+    font-size: 14px;
 }

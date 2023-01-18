@@ -1,40 +1,35 @@
-<div class="container my-4 py-4">
+<div class="container my-4 py-2">
     <div class="row my-5">
         <div class="col-md-12">
             <div class="row">
                 <div class="col-12 col-md-6 card-intro">
-                    <h3 class="mb-4">O que é</h3>
-                    <p>
-                        PDAgro é um sistema especialista gratuito para verificação de conformidade com a Lei Geral de
-                        Proteção de Dados (LGPD) para pequenas e médias empresas do agronegócio.
+                        <h3 class="mb-4">Privacidade de Dados no Agronegócio</h3>
+                        <p><b>Diagnóstico grátis de conformidade à Lei Geral de Proteção de Dados (LGPD)
+                            para empresas de pequeno e médio porte.
+                        </b></p>
+                        
+                        <p>Um sistema especialista que utiliza uma adaptação da ferramenta <i><b>Balanced Scorecard (BSC)</b></i> para avaliar o desempenho organizacional, com um conjunto de questões objetivas nas dimensões: Processos, Lei/Norma, Tecnologia e Aprendizado. </p>
+                        <p>Após realizar o diagnóstico você recebe recomendações para auxiliar na tomada de decisões.</p>
 
-                    </p>
-                    <p>
-                        A análise está organizada em uma adaptação da ferramenta <i><b>Balanced Scorecard (BSC)</b></i>
-                        com um
-                        conjunto de questões objetivas nas dimensões: Processos, Lei/Norma, Tecnologia e Aprendizado.
-                    </p>
-                    <p>
-                        Após realizar o diagnóstico você recebe recomendações para auxiliar na tomada de decisões.</p>
 
-                    <button class="btn btn-success btn-sm px-4 mt-2" [routerLink]="['/views/diagnostic']">Iniciar
+                    <button class="btn btn-success px-4 mt-2" [routerLink]="['/views/company']">Iniciar
                         diagnóstico</button>
 
-                    <div class="row mt-4">
-                        <div class="col-6 text-center">
+                    <div class="row my-4">
+                        <div class="col-12 col-md-6 text-center mb-4">
                             <div class="card h-100">
                                 <div class="card-header text-success">
                                      <h6 class="m-0"><i class="fa fa-thumbs-up"></i> SE APLICA</h6> 
                                 </div>
                                 <div class="card-body">
                                  <p>Pessoas ou empresas que realizam operações
-                                    com dados pessoais (em meios digitais ou em papel) coletados em território
+                                    com dados pessoais (meios digitais ou papel) coletados em território
                                     nacional
                                     para oferecer ou fornecer bens ou serviços.</p>   
                                 </div>
                             </div>
                         </div>
-                        <div class="col-6 text-center">
+                        <div class="col-12 col-md-6 text-center mb-4">
                             <div class="card h-100">
                                 <div class="card-header text-danger">
                                      <h6 class="m-0"><i class="fa fa-thumbs-down"></i> NÃO SE APLICA</h6> 
@@ -48,7 +43,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col">
+                <div class="col d-none d-md-flex">
                     <ng-lottie [options]="options"></ng-lottie>
                 </div>
             </div>

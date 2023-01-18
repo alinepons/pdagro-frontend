@@ -1,28 +1,36 @@
-<nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
+<nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
   <div class="container">
     <a class="navbar-brand" [routerLink]="['/views']">
       <img class="logo img-fluid" src="assets/logo.png" alt="">
     </a>
 
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#conteudoNavbarSuportado"
+    <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#conteudoNavbarSuportado"
       aria-controls="conteudoNavbarSuportado" aria-expanded="false" aria-label="Alterna navegação">
       <span class="navbar-toggler-icon"></span>
-    </button>
+    </button> -->
 
-    <div class="collapse navbar-collapse" id="conteudoNavbarSuportado">
+    <!-- <div class="collapse navbar-collapse" id="conteudoNavbarSuportado">
       <div class="buttons ms-auto">
-        <button class="btn btn-success" (click)="goLogin()" *ngIf="!authSrv.isAuthenticated">Login</button>
-        <button class="btn" (click)="logout()" *ngIf="authSrv.isAuthenticated">Logout</button>
+        <button class="btn btn-sm btn-outline-success px-3" (click)="goLogin()" *ngIf="!authSrv.isAuthenticated"><i class="fa fa-lock me-2"></i>Login</button>
+        <button class="btn btn-sm" (click)="logout()" *ngIf="authSrv.isAuthenticated"><i class="fa fa-sign-out me-2"></i>Logout</button>
       </div>
+    </div> -->
 
+    <div class="buttons ms-auto">
+      <button class="btn btn-sm btn-outline-success px-3" (click)="goLogin()" *ngIf="!authSrv.isAuthenticated"><i class="fa fa-lock me-2"></i>Login</button>
+      <button class="btn btn-sm" (click)="logout()" *ngIf="authSrv.isAuthenticated"><i class="fa fa-sign-out me-2"></i>Logout</button>
     </div>
   </div>
 </nav>
 
 <router-outlet></router-outlet>
 
+<div class="congrats" *ngIf="diagnosticSrv.animationSuccess.getValue()">
+  <ng-lottie [options]="options" (complete)="onComplete()"></ng-lottie>
+</div>
+
 <footer class="footer d-flex align-items-center">
   <div class="container text-center">
-    <span class="text-muted">PDAgro</span>
+    <span class="text-muted">PDAgro - Diagnóstico de Conformidade à LGPD</span>
   </div>
 </footer>

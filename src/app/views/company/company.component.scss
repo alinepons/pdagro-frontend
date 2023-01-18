@@ -6,3 +6,29 @@
     padding: 4px 10px;
     background-color: rgb(245, 245, 245);
 }
+
+.company {
+    p {
+        font-size: 14px;
+        margin: 0;
+    }
+
+    .subtitle {
+        font-size: 12px;
+        font-weight: 600;
+        color: #777;
+    }
+
+    .resultDiagnostic {
+
+        .btnLink {
+            font-size: 14px;
+            color: #015A4D;
+            cursor: pointer;
+
+            &:hover {
+                color: #017BFE;
+            }
+        }
+    }
+}

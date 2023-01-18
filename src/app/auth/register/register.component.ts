@@ -14,6 +14,7 @@ export class RegisterComponent implements OnInit {
 
   formRegister: FormGroup
   accept: boolean = false
+  loading: boolean = false
 
   constructor(
     private router: Router,
@@ -63,6 +64,19 @@ export class RegisterComponent implements OnInit {
     }
 
     this.authService.register(model)
+      .then((res) => {
+        this.router.navigate(['auth']);
+        this.toastSrv.success('Cadastro realizado com sucesso!', 'Cadastro')
+        this.loading = false
+      })
+      .catch((err) => {
+        this.loading = false
+        if (err.error.message) {
+          this.toastSrv.error(err.error.message, 'Cadastro')
+          return
+        }
+        this.toastSrv.error('Verifique sua conexão e tente novamente', 'Cadastro')
+      })
   }
 
   goLogin() {

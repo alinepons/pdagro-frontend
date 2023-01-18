@@ -9,7 +9,7 @@ import { CompanyService } from '../service/company.service';
 @Injectable({
   providedIn: 'root'
 })
-export class CompanyGuard implements CanActivate {
+export class DiagnosticGuard implements CanActivate {
 
   constructor(private authSrv: AuthService, private companySrv: CompanyService, private toastrSrv: ToastrService, private router: Router) { }
 
@@ -19,11 +19,13 @@ export class CompanyGuard implements CanActivate {
 
     if (this.authSrv.isAuthenticated && this.authSrv.getToken) {
       const user = jwtDecode<any>(this.authSrv.getToken)
-      const company = this.companySrv.getLocalCompany
+      const company = this.companySrv.getCompany
       if (user && company && company.user === user.userId) {
-        return this.router.navigate(['views']);
+        return true
       }
-      return true
+      localStorage.removeItem('company')
+      this.toastrSrv.warning('Cadastre sua empresa para acessar o diagnóstico.', 'PDAgro')
+      return this.router.createUrlTree(['views/company']);
     }
     return this.router.createUrlTree(['auth/login']);
   }

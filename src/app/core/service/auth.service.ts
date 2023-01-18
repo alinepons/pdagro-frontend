@@ -2,11 +2,9 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
-import { BehaviorSubject, Observable } from "rxjs";
+import { BehaviorSubject, firstValueFrom, Observable } from "rxjs";
 import { environment } from "src/environments/environment";
-import { IAuth } from "../models/auth";
-import { IAuthResponse } from "../models/auth-response";
-import { ICompany } from "../models/company";
+import { IAuth, IAuthResponse } from "../models/auth";
 import { IUser } from "../models/user";
 
 
@@ -19,23 +17,14 @@ export class AuthService {
   private _user: BehaviorSubject<IUser | null> = new BehaviorSubject<IUser | null>(null)
   public user: Observable<IUser | null> = this._user.asObservable()
 
-  private _businessUser: BehaviorSubject<ICompany[] | null> = new BehaviorSubject<ICompany[] | null>(null)
-  public businessUser: Observable<ICompany[] | null> = this._businessUser.asObservable()
+  constructor(private http: HttpClient, private router: Router, private toastSrv: ToastrService) {}
 
-  constructor(private http: HttpClient, private router: Router, private toastSrv: ToastrService) {
-
-  }
-
-  get token(): string | null {
+  get getToken(): string | null {
     return localStorage.getItem('auth.token')
   }
 
-  get business(): string | null {
-    return localStorage.getItem('auth.business')
-  }
-
   get isAuthenticated(): boolean {
-    return (this.token !== null)
+    return (this.getToken !== null)
   }
 
   /**
@@ -45,46 +34,20 @@ export class AuthService {
    * Caso retorne true, então também redireciona o usuário para a página solicitada.
    */
   login(auth: IAuth) {
-    return this.http.post<IAuthResponse>(`${this.URL}auth/login`, auth)
+    return firstValueFrom(this.http.post<IAuthResponse>(`${this.URL}auth/login`, auth))
   }
 
   register(user: IUser) {
-    this.http.post(`${this.URL}auth/register`, user)
-      .subscribe({
-        next: (res) => {
-          this.router.navigate(['auth']);
-          this.toastSrv.success('Cadastro realizado com sucesso!', 'Cadastro')
-        },
-        error: (err) => {
-          if (err.error.message) {
-            this.toastSrv.error(err.error.message, 'Cadastro')
-            return
-          }
-          this.toastSrv.error('Verifique sua conexão e tente novamente', 'Cadastro')
-        }
-      })
+    return firstValueFrom(this.http.post(`${this.URL}auth/register`, user))
   }
 
   forgotPassword(email: string) {
-    return this.http.post(`${this.URL}auth/forgot-password`, { email })
+    return firstValueFrom(this.http.post(`${this.URL}auth/forgot-password`, { email }))
   }
 
   resetPassword(auth: IAuth) {
-    this.http.post(`${this.URL}auth/change-password`, auth)
-      .subscribe({
-        next: (res: any) => {
-          this.router.navigate(['auth']);
-          localStorage.removeItem('auth.email')
-          this.toastSrv.success(res.message, 'Redefinir senha')
-        },
-        error: (err) => {
-          if (err.error.message) {
-            this.toastSrv.error(err.error.message, 'Redefinir senha')
-            return
-          }
-          this.toastSrv.error('Verifique sua conexão e tente novamente', 'Redefinir senha')
-        }
-      })
+    return firstValueFrom(this.http.post(`${this.URL}auth/change-password`, auth))
+     
   }
 
   /**
@@ -95,7 +58,7 @@ export class AuthService {
    */
   redirectLoginUser(res: IAuthResponse) {
     this._user.next(res.user)
-    localStorage.setItem('auth.token', res.token)
+    localStorage.setItem('auth.token', res.token)   
     this.router.navigate(['views']);
   }
 

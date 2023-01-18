@@ -1,3 +1,6 @@
+@import "~animate.css/animate.min";
+
+
 html {
     position: relative;
     min-height: 100%;
@@ -46,3 +49,13 @@ html {
     font-weight: 600;
     font-size: 12px;
 }
+
+.cursor-pointer {
+    cursor: pointer;
+    :hover {
+        opacity: .5;
+    }
+    
+}
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap';
