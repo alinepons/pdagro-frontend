@@ -84,8 +84,6 @@ export class DiagnosticComponent implements OnInit {
   submitDisgnostic() {
     if (this.formProccess.valid && this.formLaw.valid && this.formTech.valid && this.formLearning.valid && this.company) {
 
-      
-
       const data: IDiagnostic = {
         company: this.company.id,
         reply: {

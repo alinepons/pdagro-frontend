@@ -2,7 +2,9 @@
 
             <div class="card-header p-3 d-flex justify-content-between align-items-center">
                 <h5 class="card-title m-0">Diagnóstico</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn" (click)="closeModal()">
+                    <i class="fa fa-times fs-5"></i>
+                </button>
             </div>
             <div class="card-body">
 
@@ -10,8 +12,6 @@
                 <h6>CNPJ: {{data.cnpj}}</h6>
 
                 <hr>
-
-                <!-- <pre>{{data.diagnostic.reply | json}}</pre> -->
 
                 <div class="result">
 
@@ -40,49 +40,49 @@
                     <div class="tab-content" id="pills-tabContent">
                         <div class="tab-pane fade show active py-2" id="pills-proccess" role="tabpanel"
                             aria-labelledby="pills-proccess-tab" tabindex="0">
-                            <div class="resultItem shadow-sm my-2" *ngFor="let item of resultProcess">
+                            <div class="resultItem shadow-sm my-2" *ngFor="let item of data.diagnostic.proccess; let i = index">
                                 <p class="question">{{item._id}}) {{item.question}}</p>
                                 <p class="reply"><i class="fa fa-reply me-2"></i> <span>[{{item.amount}}]
                                         {{item.reply}}</span></p>
                                 <div class="feedback alert alert-info p-0 p-1 px-2 m-0 mt-2">
                                     <i class="fa fa-lightbulb"></i>
-                                    <p class="m-0">{{item.question}}</p>
+                                    <p class="m-0">{{data.questions.proccess[i].feedback}}</p>
                                 </div>
                             </div>
                         </div>
                         <div class="tab-pane fade" id="pills-law" role="tabpanel" aria-labelledby="pills-law-tab"
                             tabindex="0">
-                            <div class="resultItem shadow-sm my-2" *ngFor="let item of resultLaw">
+                            <div class="resultItem shadow-sm my-2" *ngFor="let item of data.diagnostic.law; let i = index">
                                 <p class="question">{{item._id}}) {{item.question}}</p>
                                 <p class="reply"><i class="fa fa-reply me-2"></i> <span>[{{item.amount}}]
                                         {{item.reply}}</span></p>
                                 <div class="feedback alert alert-info p-0 p-1 px-2 m-0 mt-2">
                                     <i class="fa fa-lightbulb"></i>
-                                    <p class="m-0">{{item.question}}</p>
+                                    <p class="m-0">{{data.questions.law[i].feedback}}</p>
                                 </div>
                             </div>
                         </div>
                         <div class="tab-pane fade" id="pills-tech" role="tabpanel" aria-labelledby="pills-tech-tab"
                             tabindex="0">
-                            <div class="resultItem shadow-sm my-2" *ngFor="let item of resultTech">
+                            <div class="resultItem shadow-sm my-2" *ngFor="let item of data.diagnostic.tech; let i = index">
                                 <p class="question">{{item._id}}) {{item.question}}</p>
                                 <p class="reply"><i class="fa fa-reply me-2"></i> <span>[{{item.amount}}]
                                         {{item.reply}}</span></p>
                                 <div class="feedback alert alert-info p-0 p-1 px-2 m-0 mt-2">
                                     <i class="fa fa-lightbulb"></i>
-                                    <p class="m-0">{{item.question}}</p>
+                                    <p class="m-0">{{data.questions.tech[i].feedback}}</p>
                                 </div>
                             </div>
                         </div>
                         <div class="tab-pane fade" id="pills-learning" role="tabpanel"
                             aria-labelledby="pills-learning-tab" tabindex="0">
-                            <div class="resultItem shadow-sm my-2" *ngFor="let item of resultLearning">
+                            <div class="resultItem shadow-sm my-2" *ngFor="let item of data.diagnostic.learning; let i = index">
                                 <p class="question">{{item._id}}) {{item.question}}</p>
                                 <p class="reply"><i class="fa fa-reply me-2"></i> <span>[{{item.amount}}]
                                         {{item.reply}}</span></p>
                                 <div class="feedback alert alert-info p-0 p-1 px-2 m-0 mt-2">
                                     <i class="fa fa-lightbulb"></i>
-                                    <p class="m-0">{{item.question}}</p>
+                                    <p class="m-0">{{data.questions.learning[i].feedback}}</p>
                                 </div>
                             </div>
                         </div>
@@ -90,10 +90,10 @@
                 </div>
             </div>
             <div class="card-footer p-3 d-flex justify-content-between">
-                <button class="btn btn-success btn-sm">
-                    <i class="fa fa-file-pdf"></i>
+                <button class="btn btn-success btn-sm px-3">
+                    <i class="fa fa-file-pdf"></i> Salvar PDF
                 </button>
-                <button class="btn btn-secondary btn-sm" (click)="closeModal()">
+                <button class="btn btn-secondary btn-sm px-3" (click)="closeModal()">
                     <i class="fa fa-times"></i> Fechar
                 </button>
             </div>

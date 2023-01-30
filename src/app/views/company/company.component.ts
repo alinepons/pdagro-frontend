@@ -17,12 +17,26 @@ export class CompanyComponent implements OnInit {
 
   formCompany: FormGroup = new FormGroup({})
   formQuestions: FormGroup = new FormGroup({})
+
   questionsCompany: any[] = []
+
+  questionsProccess: any[] = []
+  questionsLaw: any[] = []
+  questionsTech: any[] = []
+  questionsLearning: any[] = []
+
+  resultProcess: any[] = []
+  resultLaw: any[] = []
+  resultTech: any[] = []
+  resultLearning: any[] = []
+
   activityOptions: string[] = []
 
   view: string = 'LIST'
 
   company: any[] = []
+  pesos: any = {} as any
+  feedback: any = {} as any
 
   constructor(
     private toastSrv: ToastrService,
@@ -44,9 +58,21 @@ export class CompanyComponent implements OnInit {
 
   getQuestions() {
     this.diagnosticSrv.getQuestions()
-      .then((res) => {
+      .then((res: any) => {
         this.questionsCompany = res[0].items
+
+        this.questionsProccess = res[1].items
+        this.questionsLaw = res[2].items
+        this.questionsTech = res[3].items
+        this.questionsLearning = res[4].items
+
         this.generateFormQuestions(this.questionsCompany)
+        this.pesos["proccess"] = res[1].peso
+        this.pesos["law"] = res[2].peso
+        this.pesos["tech"] = res[3].peso
+        this.pesos["learning"] = res[4].peso
+
+        console.log(this.pesos)
       })
       .catch((err) => {
         console.log(err)
@@ -90,7 +116,6 @@ export class CompanyComponent implements OnInit {
           next: (res: any) => {
             this.toastSrv.success('Empresa cadastrada com sucesso!', 'PDAgro')
             this.getCompany()
-            this.cancelForm()
           },
           error: (err) => {
             console.log(err)
@@ -139,17 +164,41 @@ export class CompanyComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
 
-
-
       }
     })
   }
 
   openDiagnostic(company: any, diagnostic: any) {
+
+    Object.keys(diagnostic.reply.proccess).forEach(k => {
+      this.resultProcess.push(diagnostic.reply.proccess[k])
+    })
+    Object.keys(diagnostic.reply.law).forEach(k => {
+      this.resultLaw.push(diagnostic.reply.law[k])
+    })
+    Object.keys(diagnostic.reply.tech).forEach(k => {
+      this.resultTech.push(diagnostic.reply.tech[k])
+    })
+    Object.keys(diagnostic.reply.learning).forEach(k => {
+      this.resultLearning.push(diagnostic.reply.learning[k])
+    })
+
     const data = {
       name: company.name,
       cnpj: company.cnpj,
-      diagnostic
+      pesos: this.pesos,
+      questions: {
+        proccess: this.questionsProccess,
+        law: this.questionsLaw,
+        tech: this.questionsTech,
+        learning: this.questionsLearning
+      },
+      diagnostic: {
+        proccess: this.resultProcess,
+        law: this.resultLaw,
+        tech: this.resultTech,
+        learning: this.resultLearning
+      }
     }
     const modalRef = this.modalService.open(ModalResultComponent, { size: 'xl', keyboard: false });
     modalRef.componentInstance.data = data
