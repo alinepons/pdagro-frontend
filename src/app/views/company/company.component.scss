@@ -8,6 +8,7 @@
 }
 
 .company {
+    
     p {
         font-size: 14px;
         margin: 0;
@@ -19,16 +20,39 @@
         color: #777;
     }
 
-    .resultDiagnostic {
+
+    .card-diagnostic {
+        padding: 8px 12px;
+        cursor: pointer;
+
+        &:hover {
+            transform: scale(1.025);
+        }
 
         .btnLink {
-            font-size: 14px;
             color: #015A4D;
-            cursor: pointer;
 
-            &:hover {
-                color: #017BFE;
+            font-weight: 600;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            .img-fluid {
+                max-width: 100px;
+            }
+
+            .info {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+
+                p {
+                    font-size: 12px;
+                }
             }
         }
     }
+
+
+
 }

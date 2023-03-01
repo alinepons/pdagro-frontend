@@ -1,12 +1,18 @@
-
 .fs-title {
     margin-bottom: 16px;
 }
+
 /*progressbar*/
 #progressbar {
     margin-bottom: 30px;
     overflow: hidden;
     color: lightgrey;
+
+    &.feedback {
+        li {
+            width: 20%;
+        }
+    }
 }
 
 #progressbar .active {
@@ -42,6 +48,11 @@
     content: "\f51c";
 }
 
+#progressbar #feedback:before {
+    font-family: FontAwesome;
+    content: "\f27a";
+}
+
 /*ProgressBar before any progress*/
 #progressbar li:before {
     width: 50px;
@@ -69,8 +80,15 @@
 }
 
 /*Color number of the step and the connector before it*/
-#progressbar li.active:before, #progressbar li.active:after {
+#progressbar li.active:before,
+#progressbar li.active:after {
     background: green;
+}
+
+
+#progressbar li.active.feedback:before,
+#progressbar li.active.feedback:after {
+    background: #DC3444;
 }
 
 .comment {

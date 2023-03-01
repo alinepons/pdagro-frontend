@@ -20,19 +20,24 @@ export class DiagnosticComponent implements OnInit {
   questionsLawList: any[] = []
   questionsTechList: any[] = []
   questionsLearningList: any[] = []
+  questionsFeedbackList: any[] = []
 
   formProccess: FormGroup = new FormGroup({});
   formLaw: FormGroup = new FormGroup({});
   formTech: FormGroup = new FormGroup({});
   formLearning: FormGroup = new FormGroup({});
+  formFeedback: FormGroup = new FormGroup({});
 
   formActive: string = 'proccess'
+  isFeedback: boolean = true
 
   constructor(private diagnosticSrv: DiagnosticService, private route: ActivatedRoute, private companySrv: CompanyService, private router: Router, private toastSrv: ToastrService) { }
 
   async ngOnInit(): Promise<void> {
 
     this.getCompany()
+    this.getFeedback()
+
 
     this.diagnosticSrv.getQuestions()
       .then((res) => {
@@ -41,6 +46,7 @@ export class DiagnosticComponent implements OnInit {
         this.questionsLawList = res[2].items
         this.questionsTechList = res[3].items
         this.questionsLearningList = res[4].items
+        this.questionsFeedbackList = res[5].items
         this.generateForm()
       })
       .catch((err) => {
@@ -53,12 +59,24 @@ export class DiagnosticComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('id')
     if (id) {
       this.companySrv.getCompany(id)
-      .then((res: any)=> {
-        console.log(res)
-        this.company = res
-      })
+        .then((res: any) => {
+          console.log(res)
+          this.company = res
+        })
     }
 
+  }
+
+  getFeedback() {
+    this.diagnosticSrv.getFeedback()
+      .then((res: any) => {
+        console.log(res)
+        this.isFeedback = (res.length > 0)
+        console.log(this.isFeedback)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   }
 
   generateForm() {
@@ -74,6 +92,10 @@ export class DiagnosticComponent implements OnInit {
     this.questionsLearningList.forEach((item) => {
       this.formLearning.addControl(`question_${item._id}`, new FormControl(null, Validators.compose([Validators.required, Validators.minLength(3)])))
     })
+
+    this.questionsFeedbackList.forEach((item) => {
+      this.formFeedback.addControl(`question_${item._id}`, new FormControl(null, Validators.compose([Validators.required, Validators.minLength(3)])))
+    })
   }
 
   nextTab(tab: string) {
@@ -82,7 +104,12 @@ export class DiagnosticComponent implements OnInit {
   }
 
   submitDisgnostic() {
-    if (this.formProccess.valid && this.formLaw.valid && this.formTech.valid && this.formLearning.valid && this.company) {
+    if (
+      this.formProccess.valid &&
+      this.formLaw.valid &&
+      this.formTech.valid &&
+      this.formLearning.valid &&
+      this.company) {
 
       const data: IDiagnostic = {
         company: this.company.id,
@@ -91,7 +118,8 @@ export class DiagnosticComponent implements OnInit {
           law: this.formLaw.value,
           tech: this.formTech.value,
           learning: this.formLearning.value
-        }
+        },
+        feedback: this.formFeedback.value
       }
 
       Swal.fire({
@@ -121,6 +149,7 @@ export class DiagnosticComponent implements OnInit {
             })
             .catch((err) => {
               console.log(err)
+              this.toastSrv.warning('Verifique se todas as respostas foram informadas e tente novamente!', 'PDAgro')
             })
 
         }

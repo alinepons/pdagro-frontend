@@ -1,9 +1,27 @@
+.overview {
+    p {
+        margin: 0;
+        margin-bottom: 2px;
+        font-size: 14px;
+
+        span {
+            font-weight: 600;
+        }
+    }
+}
+
+.image {
+    .img-fluid {
+        max-width: 120px;
+    }
+}
+
 .result {
     .nav-pills {
         li {
             .nav-link {
                 color: #388933;
-                padding: 6px 16px !important;
+                padding: 4px 16px !important;
             }
 
             .active {
@@ -12,6 +30,8 @@
             }
         }
     }
+
+
 
     .resultItem {
         border-left: 4px solid #015a4d40;

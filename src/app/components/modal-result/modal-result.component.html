@@ -1,101 +1,119 @@
 <div class="card">
 
-            <div class="card-header p-3 d-flex justify-content-between align-items-center">
-                <h5 class="card-title m-0">Diagnóstico</h5>
-                <button type="button" class="btn" (click)="closeModal()">
-                    <i class="fa fa-times fs-5"></i>
+    <div class="card-header p-3 d-flex justify-content-between align-items-center">
+        <h5 class="card-title m-0">Diagnóstico</h5>
+        <button type="button" class="btn" (click)="closeModal(null)">
+            <i class="fa fa-times fs-5"></i>
+        </button>
+    </div>
+    <div class="card-body">
+        <div class="d-flex align-items-center justify-content-between">
+            <div class="overview">
+                <p>Empresa: <span>{{data.name}}</span></p>
+                <p>CNPJ: <span>{{data.cnpj}}</span></p>
+                <p>Pontuação: <span>{{data.resultRate}}</span></p>
+
+                <div class="d-flex mt-2 flex-column flex-md-row">
+                <button class="btn btn-warning btn-sm px-3" (click)="getCertificate()">
+                    <i class="fa fa-file-pdf me-1"></i> Salvar PDF
+                </button>     
+                
+                <button class="btn btn-danger btn-sm px-3 m-0 mt-2 ms-md-2 mt-md-0" (click)="deleteDiagnostic(data._id)">
+                    <i class="fa fa-trash me-1"></i> Excluir diagnóstico
                 </button>
+                </div>
+
             </div>
-            <div class="card-body">
+      
+            <div class="image d-flex flex-column align-items-end">
+                <img [src]="data.image" class="img-fluid">
 
-                <h6>Empresa: {{data.name}}</h6>
-                <h6>CNPJ: {{data.cnpj}}</h6>
+            </div>
 
-                <hr>
+        </div>
 
-                <div class="result">
+        <hr>
 
-                    <ul class="nav nav-pills mb-2" id="pills-tab" role="tablist">
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link active" id="pills-proccess-tab" data-bs-toggle="pill"
-                                data-bs-target="#pills-proccess" type="button" role="tab" aria-controls="pills-proccess"
-                                aria-selected="true">Processos</button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="pills-law-tab" data-bs-toggle="pill"
-                                data-bs-target="#pills-law" type="button" role="tab" aria-controls="pills-law"
-                                aria-selected="false">Lei/Norma</button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="pills-tech-tab" data-bs-toggle="pill"
-                                data-bs-target="#pills-tech" type="button" role="tab" aria-controls="pills-tech"
-                                aria-selected="false">Tecnologia</button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="pills-learning-tab" data-bs-toggle="pill"
-                                data-bs-target="#pills-learning" type="button" role="tab" aria-controls="pills-learning"
-                                aria-selected="false">Aprendizado</button>
-                        </li>
-                    </ul>
-                    <div class="tab-content" id="pills-tabContent">
-                        <div class="tab-pane fade show active py-2" id="pills-proccess" role="tabpanel"
-                            aria-labelledby="pills-proccess-tab" tabindex="0">
-                            <div class="resultItem shadow-sm my-2" *ngFor="let item of data.diagnostic.proccess; let i = index">
-                                <p class="question">{{item._id}}) {{item.question}}</p>
-                                <p class="reply"><i class="fa fa-reply me-2"></i> <span>[{{item.amount}}]
-                                        {{item.reply}}</span></p>
-                                <div class="feedback alert alert-info p-0 p-1 px-2 m-0 mt-2">
-                                    <i class="fa fa-lightbulb"></i>
-                                    <p class="m-0">{{data.questions.proccess[i].feedback}}</p>
-                                </div>
-                            </div>
+        <div class="result">
+
+            <ul class="nav nav-pills mb-2" id="pills-tab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="pills-proccess-tab" data-bs-toggle="pill"
+                        data-bs-target="#pills-proccess" type="button" role="tab" aria-controls="pills-proccess"
+                        aria-selected="true">Processos</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="pills-law-tab" data-bs-toggle="pill" data-bs-target="#pills-law"
+                        type="button" role="tab" aria-controls="pills-law" aria-selected="false">Lei/Norma</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="pills-tech-tab" data-bs-toggle="pill" data-bs-target="#pills-tech"
+                        type="button" role="tab" aria-controls="pills-tech" aria-selected="false">Tecnologia</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="pills-learning-tab" data-bs-toggle="pill"
+                        data-bs-target="#pills-learning" type="button" role="tab" aria-controls="pills-learning"
+                        aria-selected="false">Aprendizado</button>
+                </li>
+            </ul>
+            <div class="tab-content" id="pills-tabContent">
+                <div class="tab-pane fade show active py-2" id="pills-proccess" role="tabpanel"
+                    aria-labelledby="pills-proccess-tab" tabindex="0">
+                    <div class="resultItem shadow-sm my-2" *ngFor="let item of data.diagnostic.proccess; let i = index">
+                        <p class="question">{{item._id}}) {{item.question}}</p>
+                        <p class="reply"><i class="fa fa-reply me-2"></i> <span>[{{item.weight_option}}]
+                                {{item.reply}}</span></p>
+                        <div class="feedback alert alert-info p-0 p-1 px-2 m-0 mt-2">
+                            <i class="fa fa-lightbulb"></i>
+                            <p class="m-0">{{data.questions.proccess[i].feedback}}</p>
                         </div>
-                        <div class="tab-pane fade" id="pills-law" role="tabpanel" aria-labelledby="pills-law-tab"
-                            tabindex="0">
-                            <div class="resultItem shadow-sm my-2" *ngFor="let item of data.diagnostic.law; let i = index">
-                                <p class="question">{{item._id}}) {{item.question}}</p>
-                                <p class="reply"><i class="fa fa-reply me-2"></i> <span>[{{item.amount}}]
-                                        {{item.reply}}</span></p>
-                                <div class="feedback alert alert-info p-0 p-1 px-2 m-0 mt-2">
-                                    <i class="fa fa-lightbulb"></i>
-                                    <p class="m-0">{{data.questions.law[i].feedback}}</p>
-                                </div>
-                            </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="pills-law" role="tabpanel" aria-labelledby="pills-law-tab" tabindex="0">
+                    <div class="resultItem shadow-sm my-2" *ngFor="let item of data.diagnostic.law; let i = index">
+                        <p class="question">{{item._id}}) {{item.question}}</p>
+                        <p class="reply"><i class="fa fa-reply me-2"></i> <span>[{{item.weight_option}}]
+                                {{item.reply}}</span></p>
+                        <div class="feedback alert alert-info p-0 p-1 px-2 m-0 mt-2">
+                            <i class="fa fa-lightbulb"></i>
+                            <p class="m-0">{{data.questions.law[i].feedback}}</p>
                         </div>
-                        <div class="tab-pane fade" id="pills-tech" role="tabpanel" aria-labelledby="pills-tech-tab"
-                            tabindex="0">
-                            <div class="resultItem shadow-sm my-2" *ngFor="let item of data.diagnostic.tech; let i = index">
-                                <p class="question">{{item._id}}) {{item.question}}</p>
-                                <p class="reply"><i class="fa fa-reply me-2"></i> <span>[{{item.amount}}]
-                                        {{item.reply}}</span></p>
-                                <div class="feedback alert alert-info p-0 p-1 px-2 m-0 mt-2">
-                                    <i class="fa fa-lightbulb"></i>
-                                    <p class="m-0">{{data.questions.tech[i].feedback}}</p>
-                                </div>
-                            </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="pills-tech" role="tabpanel" aria-labelledby="pills-tech-tab"
+                    tabindex="0">
+                    <div class="resultItem shadow-sm my-2" *ngFor="let item of data.diagnostic.tech; let i = index">
+                        <p class="question">{{item._id}}) {{item.question}}</p>
+                        <p class="reply"><i class="fa fa-reply me-2"></i> <span>[{{item.weight_option}}]
+                                {{item.reply}}</span></p>
+                        <div class="feedback alert alert-info p-0 p-1 px-2 m-0 mt-2">
+                            <i class="fa fa-lightbulb"></i>
+                            <p class="m-0">{{data.questions.tech[i].feedback}}</p>
                         </div>
-                        <div class="tab-pane fade" id="pills-learning" role="tabpanel"
-                            aria-labelledby="pills-learning-tab" tabindex="0">
-                            <div class="resultItem shadow-sm my-2" *ngFor="let item of data.diagnostic.learning; let i = index">
-                                <p class="question">{{item._id}}) {{item.question}}</p>
-                                <p class="reply"><i class="fa fa-reply me-2"></i> <span>[{{item.amount}}]
-                                        {{item.reply}}</span></p>
-                                <div class="feedback alert alert-info p-0 p-1 px-2 m-0 mt-2">
-                                    <i class="fa fa-lightbulb"></i>
-                                    <p class="m-0">{{data.questions.learning[i].feedback}}</p>
-                                </div>
-                            </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="pills-learning" role="tabpanel" aria-labelledby="pills-learning-tab"
+                    tabindex="0">
+                    <div class="resultItem shadow-sm my-2" *ngFor="let item of data.diagnostic.learning; let i = index">
+                        <p class="question">{{item._id}}) {{item.question}}</p>
+                        <p class="reply"><i class="fa fa-reply me-2"></i> <span>[{{item.weight_option}}]
+                                {{item.reply}}</span></p>
+                        <div class="feedback alert alert-info p-0 p-1 px-2 m-0 mt-2">
+                            <i class="fa fa-lightbulb"></i>
+                            <p class="m-0">{{data.questions.learning[i].feedback}}</p>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="card-footer p-3 d-flex justify-content-between">
-                <button class="btn btn-success btn-sm px-3">
-                    <i class="fa fa-file-pdf"></i> Salvar PDF
-                </button>
-                <button class="btn btn-secondary btn-sm px-3" (click)="closeModal()">
-                    <i class="fa fa-times"></i> Fechar
-                </button>
-            </div>
+        </div>
+    </div>
+    <div class="card-footer p-3 d-flex justify-content-between">
+        <button class="btn btn-success btn-sm px-3" (click)="getCertificate()">
+            <i class="fa fa-file-pdf me-1"></i> Salvar PDF
+        </button>
+        <button class="btn btn-secondary btn-sm px-3" (click)="closeModal(null)">
+            <i class="fa fa-times me-1"></i> Fechar
+        </button>
+    </div>
 
 </div>

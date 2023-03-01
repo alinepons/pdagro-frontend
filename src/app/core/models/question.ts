@@ -15,5 +15,5 @@ export interface IQuestion {
 export interface IQuestionOption {
     _id: number
     text: string
-    amount?: number
+    weight_option?: number
 }

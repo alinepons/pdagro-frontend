@@ -26,6 +26,10 @@ export class CompanyService {
     return this.http.post(`${this.URL}company/create`, company)
   }
 
+  deleteCompany(companyId: string) {
+    return this.http.delete(`${this.URL}company/delete?id=${companyId}`)
+  }
+
   getCompany(id?: string) {
     const END_POINT =  id ? `company/readById?id=${id}` : 'company/readByUser'
     return firstValueFrom(this.http.get(`${this.URL}${END_POINT}`))

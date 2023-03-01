@@ -19,8 +19,21 @@ export class DiagnosticService {
     return firstValueFrom(this.http.get<IQuestions[]>(`${this.URL}diagnostic/questions`))
   }
 
+  getCertificate(data: any) {
+    let headers: any = { responseType: 'blob' }
+    return firstValueFrom(this.http.post<any>(`${this.URL}diagnostic/certificate`, { data }, headers))
+  }
+
   createDiagnostic(data: IDiagnostic) {
     return firstValueFrom(this.http.post<IDiagnostic>(`${this.URL}diagnostic/create`, data))
+  }
+
+  getFeedback() {
+    return firstValueFrom(this.http.get<any>(`${this.URL}diagnostic/feedback/getAll`))
+  }
+
+  deleteDiagnostic(id: string) {
+    return firstValueFrom(this.http.delete<any>(`${this.URL}diagnostic/delete?id=${id}`))
   }
 
 }

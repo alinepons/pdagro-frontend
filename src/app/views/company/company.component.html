@@ -5,8 +5,9 @@
 
             <div class="d-flex align-items-center justify-content-between mb-4">
                 <h4 class="m-0">Empresas cadastradas</h4>
-                <button class="btn btn-sm btn-outline-success px-2 m-0" (click)="view = 'INSERT'"><i
-                        class="fa fa-plus me-2"></i>Adicionar</button>
+                <button class="btn btn-sm btn-outline-success px-2 m-0" (click)="view = 'INSERT'">
+                    <i class="fa fa-plus me-2"></i>Adicionar
+                </button>
 
             </div>
             <div class="row">
@@ -24,15 +25,19 @@
                                 </div>
                             </div>
 
-                            <div *ngIf="item.diagnostic.length > 0" class="mt-3">
-                                <div class="resultDiagnostic" *ngFor="let d of item.diagnostic; let i = index">
+                            <div *ngIf="item.diagnostic.length > 0" class="row mt-3">
+                                <div class="col-md-2" *ngFor="let d of item.diagnostic; let i = index">
+                                    <div class="p-2 mb-3 border rounded card-diagnostic">
                                     <span class="btnLink" (click)="openDiagnostic(item, d)">
-                                        <i class="fa fa-up-right-from-square me-1"></i>
-                                        Diagnóstico {{i+1}} - [{{d.created_at | date : 'dd/MM/yyyy HH:mm'}}]
-                                    </span>
+                                        <img class="img-fluid" [src]="buildFinalResults(d).image" alt="">
+                                        <div class="info mt-2">
+                                            <p class="m-0">{{d.created_at | date : 'dd/MM/yyyy HH:mm'}}</p>
+                                            <p class="m-0">Pontuação: {{ buildFinalResults(d).rate}}</p>
+                                        </div>
+                                    </span> 
+                                </div>
                                 </div>
                             </div>
-
 
                         </div>
                         <div class="card-footer">
@@ -40,7 +45,7 @@
                                 <button class="btn btn-secondary btn-sm px-3"
                                     [routerLink]="['/views/diagnostic', item.id]">
                                     <i class="fa fa-stethoscope"></i>
-                                    Novo diagnóstico
+                                    Diagnóstico
                                 </button>
 
                                 <button class="btn btn-danger btn-sm px-2" (click)="deleteCompany(item.id)">

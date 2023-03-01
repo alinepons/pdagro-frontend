@@ -11,7 +11,7 @@ import { CompanyComponent } from './company/company.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { IConfig, NgxMaskModule } from 'ngx-mask';
 import { NgbActiveModal, NgbModal, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
-import { ComponentsModule } from '../components/components.module';
+import { ComponentsModule } from '../core/components.module';
 
 export function playerFactory() {
   return player;

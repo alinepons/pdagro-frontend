@@ -20,7 +20,7 @@
                 <div class="col-md-12 mt-4">
                     <div id="msform">
                         <!-- Barra de progresso -->
-                        <ul id="progressbar" class="text-center p-0">
+                        <ul id="progressbar"class="text-center p-0" [class]="{'feedback': !isFeedback}">
                             <li [class]="{'active': formProccess.valid || formActive === 'proccess'}" id="proccess">
                                 <strong>Processos</strong>
                             </li>
@@ -33,6 +33,9 @@
                             <li [class]="{'active': formLearning.valid || formActive === 'learning'}" id="learning">
                                 <strong>Aprendizado</strong>
                             </li>
+                            <li class="feedback" *ngIf="!isFeedback" [class]="{'active': formFeedback.valid || formActive === 'feedback'}" id="feedback">
+                                <strong>Avaliação</strong>
+                            </li>
                         </ul>
                         <!-- Etapas -->
                         <fieldset [style.display]="formActive !== 'proccess' ? 'none':'block'">
@@ -41,21 +44,22 @@
                                     <h5 class="fs-title">Processos</h5>
                                     <div class="row">
                                         <div class="col-md-12 mb-3" *ngFor="let item of questionsProccessList">
-                                            <p>{{item._id}}) {{item.peso}} - {{item.title}}</p>
+                                            <p>{{item._id}}) {{item.weight_question}} - {{item.title}}</p>
                                             <p class="comment" *ngIf="item.comment">{{item.comment}}</p>
                                             <ng-container>
                                                 <div *ngFor="let option of item.options">
                                                     <label class="form-check-label">
                                                         <input class="form-check-input me-2" type="radio"
-                                                            [value]="{_id: item._id, question: item.title, weight: item.peso, reply: option.text, amount: option.amount}"
+                                                            [value]="{_id: item._id, question: item.title, weight_question: item.weight_question, reply: option.text, weight_option: option.weight_option}"
                                                             [formControlName]="'question_'+ item._id">
-                                                        <span>{{option.amount}} - {{option.text}}</span>
+                                                        <span>{{option.weight_option}} - {{option.text}}</span>
                                                     </label>
                                                 </div>
                                             </ng-container>
                                         </div>
                                     </div>
                                 </div>
+                                <button type="button" class="btn btn-warning px-4 me-2" [routerLink]="['/views/company']">Cancelar</button>
                                 <button type="button" [disabled]="formProccess.invalid" class="btn btn-success px-4"
                                     (click)="nextTab('law')">Avançar</button>
                             </form>
@@ -72,15 +76,16 @@
                                                 <div *ngFor="let option of item.options">
                                                     <label class="form-check-label">
                                                         <input class="form-check-input me-2" type="radio"
-                                                            [value]="{_id: item._id, question: item.title, weight: item.peso, reply: option.text, amount: option.amount}"
+                                                            [value]="{_id: item._id, question: item.title, weight_question: item.weight_question, reply: option.text, weight_option: option.weight_option}"
                                                             [formControlName]="'question_'+ item._id">
-                                                        <span>{{option.text}}</span>
+                                                        <span>{{option.weight_option}} - {{option.text}}</span>
                                                     </label>
                                                 </div>
                                             </ng-container>
                                         </div>
                                     </div>
                                 </div>
+                                <button type="button" class="btn btn-warning px-4 me-2" [routerLink]="['/views/company']">Cancelar</button>
                                 <button type="button" class="btn btn-secondary px-4 me-2"
                                     (click)="nextTab('proccess')">Voltar</button>
                                 <button type="button" [disabled]="formLaw.invalid" class="btn btn-success px-4"
@@ -99,15 +104,16 @@
                                                 <div *ngFor="let option of item.options">
                                                     <label class="form-check-label">
                                                         <input class="form-check-input me-2" type="radio"
-                                                            [value]="{_id: item._id, question: item.title, weight: item.peso, reply: option.text, amount: option.amount}"
+                                                            [value]="{_id: item._id, question: item.title, weight_question: item.weight_question, reply: option.text, weight_option: option.weight_option}"
                                                             [formControlName]="'question_'+ item._id">
-                                                        <span>{{option.text}}</span>
+                                                        <span>{{option.weight_option}} - {{option.text}}</span>
                                                     </label>
                                                 </div>
                                             </ng-container>
                                         </div>
                                     </div>
                                 </div>
+                                <button type="button" class="btn btn-warning px-4 me-2" [routerLink]="['/views/company']">Cancelar</button>
                                 <button type="button" class="btn btn-secondary px-4 me-2"
                                     (click)="nextTab('law')">Voltar</button>
                                 <button type="button" [disabled]="formTech.invalid" class="btn btn-success px-4"
@@ -126,7 +132,37 @@
                                                 <div *ngFor="let option of item.options">
                                                     <label class="form-check-label">
                                                         <input class="form-check-input me-2" type="radio"
-                                                            [value]="{_id: item._id, question: item.title, weight: item.peso, reply: option.text, amount: option.amount}"
+                                                            [value]="{_id: item._id, question: item.title, weight_question: item.weight_question, reply: option.text, weight_option: option.weight_option}"
+                                                            [formControlName]="'question_'+ item._id">
+                                                        <span>{{option.weight_option}} - {{option.text}}</span>
+                                                    </label>
+                                                </div>
+                                            </ng-container>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-warning px-4 me-2" [routerLink]="['/views/company']">Cancelar</button>
+                                <button type="button" class="btn btn-secondary px-4 me-2"
+                                    (click)="nextTab('learning')">Voltar</button>
+                                <button type="button" [disabled]="formLearning.invalid" *ngIf="!isFeedback" class="btn btn-success px-4"
+                                    (click)="nextTab('feedback')">Avançar</button>
+                                    <button type="button" [disabled]="formLearning.invalid" *ngIf="isFeedback" class="btn btn-success px-4"
+                                    (click)="submitDisgnostic()">Finalizar</button>
+                            </form>
+                        </fieldset>
+                        <fieldset [style.display]="formActive !== 'feedback' || isFeedback ? 'none':'block'">
+                            <form [formGroup]="formFeedback">
+                                <div class="p-4 mb-4 border rounded">
+                                    <h5 class="fs-title">Avaliação</h5>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-3" *ngFor="let item of questionsFeedbackList">
+                                            <p>{{item._id}}) {{item.title}}</p>
+                                            <p class="comment" *ngIf="item.comment">{{item.comment}}</p>
+                                            <ng-container>
+                                                <div *ngFor="let option of item.options">
+                                                    <label class="form-check-label">
+                                                        <input class="form-check-input me-2" type="radio"
+                                                            [value]="{_id: item._id, question: item.title, weight_question: item.weight_question, reply: option.text, weight_option: option.weight_option}"
                                                             [formControlName]="'question_'+ item._id">
                                                         <span>{{option.text}}</span>
                                                     </label>
@@ -135,9 +171,10 @@
                                         </div>
                                     </div>
                                 </div>
+                                <button type="button" class="btn btn-warning px-4 me-2" [routerLink]="['/views/company']">Cancelar</button>
                                 <button type="button" class="btn btn-secondary px-4 me-2"
-                                    (click)="nextTab('tech')">Voltar</button>
-                                <button type="button" [disabled]="formLearning.invalid" class="btn btn-success px-4"
+                                    (click)="nextTab('learning')">Voltar</button>
+                                <button type="button" [disabled]="formFeedback.invalid" class="btn btn-success px-4"
                                     (click)="submitDisgnostic()">Finalizar</button>
                             </form>
                         </fieldset>
