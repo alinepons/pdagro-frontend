@@ -20,11 +20,12 @@ export class TokenInterceptor implements HttpInterceptor {
 
     return next.handle(request).pipe(
       catchError((e: HttpErrorResponse) => {
-        console.log(e)
-        if (e.status === 401 && e.statusText === 'Unauthorized') {
+
+        if (e.status === 401 && e.error.message === 'Invalid token') {
           this.toastSrv.warning('Sua sessão expirou. Faça login novamente!', 'PDAgro')
           this.authSrv.redirectLogoutUser();
         }
+
         throw e;
       })
     );

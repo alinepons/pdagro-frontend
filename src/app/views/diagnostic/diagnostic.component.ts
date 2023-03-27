@@ -67,6 +67,18 @@ export class DiagnosticComponent implements OnInit {
 
   }
 
+  getClassTag(weight: number): string {
+    if (weight === 4) return 'bg-warning text-white'
+    if (weight > 4) return 'bg-danger text-white'
+    return 'bg-success text-white'
+  }
+  
+  getTextTag(weight: number): string {
+    if (weight === 4) return 'Prioridade alta'
+    if (weight > 4) return 'Prioridade urgente'
+    return 'Prioridade relevante'
+  }
+
   getFeedback() {
     this.diagnosticSrv.getFeedback()
       .then((res: any) => {
@@ -119,7 +131,7 @@ export class DiagnosticComponent implements OnInit {
           tech: this.formTech.value,
           learning: this.formLearning.value
         },
-        feedback: this.formFeedback.value
+        feedback: this.isFeedback ? null : this.formFeedback.value
       }
 
       Swal.fire({

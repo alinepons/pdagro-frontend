@@ -1,25 +1,23 @@
 import { DatePipe } from '@angular/common';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, NgZone, OnInit } from '@angular/core';
-import { FormGroup, Validators, FormControl } from '@angular/forms';
-import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { AnimationItem } from 'lottie-web';
-import { AnimationOptions } from 'ngx-lottie';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
+import { ModalCompanyComponent } from 'src/app/components/modal-company/modal-company.component';
+import { ModalFeedbackComponent } from 'src/app/components/modal-feedback/modal-feedback.component';
 import { ModalResultComponent } from 'src/app/components/modal-result/modal-result.component';
-import { ICompany } from 'src/app/core/models/company';
 import { CompanyService } from 'src/app/core/service/company.service';
 import { DiagnosticService } from 'src/app/core/service/diagnostic.service';
 import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-company',
-  templateUrl: './company.component.html',
-  styleUrls: ['./company.component.scss'],
-  providers: [DatePipe],
+  selector: 'app-admin',
+  templateUrl: './admin.component.html',
+  styleUrls: ['./admin.component.scss'],
+  providers: [DatePipe]
 })
-export class CompanyComponent implements OnInit {
-
+export class AdminComponent implements OnInit {
   formCompany: FormGroup = new FormGroup({})
   formQuestions: FormGroup = new FormGroup({})
 
@@ -42,6 +40,7 @@ export class CompanyComponent implements OnInit {
   company: any[] = []
   pesos: any = {} as any
   feedback: any = {} as any
+  feedbacks: any[] = []
 
   constructor(
     private toastSrv: ToastrService,
@@ -49,32 +48,37 @@ export class CompanyComponent implements OnInit {
     private diagnosticSrv: DiagnosticService,
     private modalService: NgbModal,
     public activeModal: NgbActiveModal,
-    private datePipe: DatePipe,
-    private ngZone: NgZone,
-    private cdr: ChangeDetectorRef
+    private datePipe: DatePipe
   ) {
 
-    this.formCompany.addControl('name', new FormControl(null, Validators.compose([Validators.required, Validators.minLength(3)])))
-    this.formCompany.addControl('cnpj', new FormControl(null, Validators.compose([Validators.required, Validators.minLength(18), Validators.maxLength(18)])))
   }
 
-
   ngOnInit(): void {
+
     this.getQuestions()
     this.getCompany()
+    this.getAllFeedback()
+  }
+
+  getAllFeedback() {
+    this.diagnosticSrv.getAllFeedback()
+      .then((res: any) => {
+        console.log(res)
+        this.feedbacks = res
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   }
 
   getQuestions() {
     this.diagnosticSrv.getQuestions()
       .then((res: any) => {
-        this.questionsCompany = res[0].items
-
         this.questionsProccess = res[1].items
         this.questionsLaw = res[2].items
         this.questionsTech = res[3].items
         this.questionsLearning = res[4].items
 
-        this.generateFormQuestions(this.questionsCompany)
         this.pesos["proccess"] = res[1].weight_dimension
         this.pesos["law"] = res[2].weight_dimension
         this.pesos["tech"] = res[3].weight_dimension
@@ -85,70 +89,11 @@ export class CompanyComponent implements OnInit {
       })
   }
 
-  get name() { return this.formCompany.get('name')! };
-  get cnpj() { return this.formCompany.get('cnpj')! };
-
-  generateFormQuestions(data: any[]) {
-    data.forEach((item) => {
-      this.formQuestions.addControl(`question_${item._id}`, new FormControl(null, Validators.compose([Validators.required, Validators.minLength(3)])))
-    })
-  }
-
   getCompany() {
-    this.companySrv.getCompany()
+    this.companySrv.getAllCompany()
       .then((res: any) => {
         this.company = res
       })
-  }
-
-  cancelForm() {
-    this.view = 'LIST'
-    this.activityOptions = []
-    this.formCompany.reset()
-    this.formQuestions.reset()
-  }
-
-  createCompany() {
-    if (this.formCompany.valid && this.formQuestions.valid) {
-
-      const data: ICompany = {
-        name: this.name.value,
-        cnpj: this.cnpj.value,
-        info: this.formQuestions.value
-      }
-
-      this.companySrv.createCompany(data)
-        .subscribe({
-          next: (res: any) => {
-            this.toastSrv.success('Empresa cadastrada com sucesso!', 'PDAgro')
-            this.getCompany()
-            this.view = 'LIST'
-          },
-          error: (err) => {
-            console.log(err)
-            if (err.error && err.error.message) {
-              this.toastSrv.error(err.error.message, 'PDAgro')
-              return
-            }
-            this.toastSrv.error('Verifique sua conexão e tente novamente', 'PDAgro')
-          }
-        })
-    } else {
-      this.toastSrv.warning('Verifique os dados informados e tente novamente', 'PDAgro')
-    }
-  }
-
-  onCheckChange(ev: any, item: any) {
-    /* Selected */
-    if (ev.target.checked) {
-      this.activityOptions.push(ev.target.value)
-    }
-    /* unselected */
-    else {
-      let i = this.activityOptions.findIndex(a => a === ev.target.value)
-      this.activityOptions.splice(i, 1)
-    }
-    this.formQuestions.get(`question_${item._id}`)?.setValue(JSON.stringify(this.activityOptions))
   }
 
   deleteCompany(id: any) {
@@ -172,7 +117,6 @@ export class CompanyComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         // rotina de exclusao da empresa e todos os diagnosticos
-
         this.companySrv.deleteCompany(id)
           .then((res: any) => {
             this.toastSrv.success('Empresa excluída com sucesso!', 'PDAgro')
@@ -185,9 +129,34 @@ export class CompanyComponent implements OnInit {
               return
             }
             this.toastSrv.error('Verifique sua conexão e tente novamente', 'PDAgro')
-          })
+          }
+          )
       }
     })
+  }
+
+  openFeedback(feedback: any) {
+    const data = {
+      _id: feedback.id,
+      email: feedback.email,
+      reply: feedback.reply,
+      created_at: this.datePipe.transform(feedback.created_at, 'dd/MM/yyyy HH:mm')
+    }
+    const modalRef = this.modalService.open(ModalFeedbackComponent, { size: 'xl', keyboard: false });
+    modalRef.componentInstance.data = data
+  }
+
+  openCompany(company: any) {
+
+    const data = {
+      _id: company.id,
+      name: company.name,
+      cnpj: company.cnpj,
+      info: company.info,
+      created_at: this.datePipe.transform(company.created_at, 'dd/MM/yyyy HH:mm')
+    }
+    const modalRef = this.modalService.open(ModalCompanyComponent, { size: 'xl', keyboard: false });
+    modalRef.componentInstance.data = data
   }
 
   openDiagnostic(company: any, diagnostic: any) {
@@ -231,9 +200,8 @@ export class CompanyComponent implements OnInit {
       created_at: this.datePipe.transform(diagnostic.created_at, 'dd/MM/yyyy HH:mm'),
       resultRate: this.buildFinalResults(diagnostic).rate,
       image: this.buildFinalResults(diagnostic).image,
-      result: this.buildFinalResults(diagnostic).result,
     }
-    console.log(data)
+
     const modalRef = this.modalService.open(ModalResultComponent, { size: 'xl', keyboard: false });
     modalRef.componentInstance.data = data
 
@@ -245,6 +213,7 @@ export class CompanyComponent implements OnInit {
         }
       }
     })
+
   }
 
 

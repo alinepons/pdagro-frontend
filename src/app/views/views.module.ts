@@ -10,8 +10,9 @@ import player from 'lottie-web';
 import { CompanyComponent } from './company/company.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { IConfig, NgxMaskModule } from 'ngx-mask';
-import { NgbActiveModal, NgbModal, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbDropdownModule, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { ComponentsModule } from '../core/components.module';
+import { AdminComponent } from './admin/admin.component';
 
 export function playerFactory() {
   return player;
@@ -28,7 +29,8 @@ const maskConfig: () => Partial<IConfig> = () => {
     HomeComponent,
     ViewsComponent,
     DiagnosticComponent,
-    CompanyComponent
+    CompanyComponent,
+    AdminComponent
   ],
   imports: [
     CommonModule,
@@ -36,6 +38,7 @@ const maskConfig: () => Partial<IConfig> = () => {
     ReactiveFormsModule,
     ComponentsModule,
     NgbModalModule,
+    NgbDropdownModule,
     NgxMaskModule.forRoot(maskConfig),
     LottieModule.forRoot({ player: playerFactory })
   ],

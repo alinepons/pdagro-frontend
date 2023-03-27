@@ -2,23 +2,23 @@ import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/core/service/auth.service';
-import { DiagnosticService } from 'src/app/core/service/diagnostic.service';
+import { CompanyService } from 'src/app/core/service/company.service';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-modal-result',
-  templateUrl: './modal-result.component.html',
-  styleUrls: ['./modal-result.component.scss']
+  selector: 'app-modal-company',
+  templateUrl: './modal-company.component.html',
+  styleUrls: ['./modal-company.component.scss']
 })
-export class ModalResultComponent implements OnInit {
+export class ModalCompanyComponent implements OnInit {
 
   @Input() data: any
   imagePath: string = ""
 
   constructor(
     public activeModal: NgbActiveModal,
-    private diagnosticSrv: DiagnosticService,
     private toastSrv: ToastrService,
+    private companySrv: CompanyService,
     public authSrv: AuthService
   ) { }
 
@@ -30,22 +30,10 @@ export class ModalResultComponent implements OnInit {
     return JSON.parse(data)
   }
 
-  getCertificate() {
-    this.diagnosticSrv.getCertificate(this.data)
-      .then((res: any) => {
-        const fileURL = URL.createObjectURL(res);
-        window.open(fileURL);
-      })
-      .catch((err: any) => {
-        this.toastSrv.error('Erro ao gerar PDF', 'PDAgro')
-      })
-  }
-
-  deleteDiagnostic(id: string) {
-
+  deleteCompany(id: string) {
     Swal.fire({
       title: 'Atenção',
-      text: "Deseja excluir o diagnóstico selecionado? Essa ação não poderá ser desfeita!",
+      text: "Deseja excluir a empresa selecionada? Essa ação não poderá ser desfeita!",
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#d33',
@@ -61,10 +49,10 @@ export class ModalResultComponent implements OnInit {
       }
     }).then((result) => {
       if (result.isConfirmed) {
-        this.diagnosticSrv.deleteDiagnostic(id)
+        this.companySrv.deleteCompany(id)
           .then((res) => {
             this.closeModal('delete')
-            this.toastSrv.success('Diagnóstico excluído com sucesso!', 'PDAgro')
+            this.toastSrv.success('Empresa excluída com sucesso!', 'PDAgro')
           })
           .catch((err) => {
             console.log(err)

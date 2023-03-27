@@ -1,60 +1,61 @@
 <div class="container my-4">
+
     <div class="row my-5">
 
-        <div class="col-md-12" *ngIf="view === 'LIST'">
+        <div class="col-md-12 mb-5" *ngIf="view === 'LIST'">
 
             <div class="d-flex align-items-center justify-content-between mb-4">
                 <h4 class="m-0">Empresas cadastradas</h4>
                 <button class="btn btn-sm btn-outline-success px-2 m-0" (click)="view = 'INSERT'">
-                    <i class="fa fa-plus me-2"></i>Adicionar
+                    <i class="fa fa-plus me-2"></i> Adicionar empresa
                 </button>
-
             </div>
             <div class="row">
                 <div class="col-md-12 mb-4" *ngFor="let item of company">
                     <div class="card">
-                        <div class="card-body company">
-                            <div>
+                        <div class="card-header d-flex flex-column flex-md-row align-items-md-center justify-content-md-between">
+                
+                                <p class="fw-bold m-0">{{item.name}}</p>
+
                                 <div class="d-flex">
-                                    <p class="fw-bold">Empresa:</p>
-                                    <p class="ms-2">{{item.name}}</p>
+                                    <button class="btn btn-secondary btn-sm px-3 me-2"
+                                        [routerLink]="['/views/diagnostic', item.id]">
+                                        <i class="fa fa-stethoscope"></i>
+                                        Diagnóstico
+                                    </button>
+    
+                                    <button class="btn btn-danger btn-sm px-2" (click)="deleteCompany(item.id)">
+                                        <i class="fa fa-trash-can"></i> Excluir empresa
+                                    </button>
                                 </div>
+                       
+                        </div>
+                        <div class="card-body pb-2">
+                            
                                 <div class="d-flex">
                                     <p class="fw-bold">CNPJ:</p>
                                     <p class="ms-2">{{item.cnpj}}</p>
                                 </div>
-                            </div>
-
-                            <div *ngIf="item.diagnostic.length > 0" class="row mt-3">
+                           
+                            <div *ngIf="item.diagnostic.length > 0" class="row">
                                 <div class="col-md-2" *ngFor="let d of item.diagnostic; let i = index">
-                                    <div class="p-2 mb-3 border rounded card-diagnostic">
-                                    <span class="btnLink" (click)="openDiagnostic(item, d)">
-                                        <img class="img-fluid" [src]="buildFinalResults(d).image" alt="">
-                                        <div class="info mt-2">
-                                            <p class="m-0">{{d.created_at | date : 'dd/MM/yyyy HH:mm'}}</p>
-                                            <p class="m-0">Pontuação: {{ buildFinalResults(d).rate}}</p>
-                                        </div>
-                                    </span> 
-                                </div>
+                                    <div class="p-2 mb-3 border rounded">
+                                        <span class="cardDiagnostic" (click)="openDiagnostic(item, d)">
+                                            <img class="img-fluid" [src]="buildFinalResults(d).image" alt="">
+                                            <div class="info mt-2">
+                                                <p class="m-0">{{d.created_at | date : 'dd/MM/yyyy HH:mm'}}</p>
+                                                <p class="m-0">Pontuação: {{ buildFinalResults(d).rate}}</p>
+                                            </div>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
 
                         </div>
-                        <div class="card-footer">
-                            <div class=" d-flex align-items-center justify-content-between">
-                                <button class="btn btn-secondary btn-sm px-3"
-                                    [routerLink]="['/views/diagnostic', item.id]">
-                                    <i class="fa fa-stethoscope"></i>
-                                    Diagnóstico
-                                </button>
 
-                                <button class="btn btn-danger btn-sm px-2" (click)="deleteCompany(item.id)">
-                                    <i class="fa fa-trash-can"></i>
-                                </button>
-                            </div>
-                        </div>
                     </div>
                 </div>
+
             </div>
 
         </div>

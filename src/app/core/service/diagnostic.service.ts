@@ -29,7 +29,11 @@ export class DiagnosticService {
   }
 
   getFeedback() {
-    return firstValueFrom(this.http.get<any>(`${this.URL}diagnostic/feedback/getAll`))
+    return firstValueFrom(this.http.get<any>(`${this.URL}diagnostic/feedback/user`))
+  }
+
+  getAllFeedback() {
+    return firstValueFrom(this.http.get<any>(`${this.URL}diagnostic/feedback/all`))
   }
 
   deleteDiagnostic(id: string) {

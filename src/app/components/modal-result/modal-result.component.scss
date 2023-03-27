@@ -11,8 +11,13 @@
 }
 
 .image {
+    max-width: 200px;
+    text-align: center;
+    p {
+        font-size: 12px;
+    }
     .img-fluid {
-        max-width: 120px;
+        max-width: 100px;
     }
 }
 

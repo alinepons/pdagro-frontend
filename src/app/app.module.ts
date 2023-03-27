@@ -7,11 +7,15 @@ import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { TokenInterceptor } from "./core/interceptors/token.interceptor";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ModalCompanyComponent } from './components/modal-company/modal-company.component';
+import { ModalFeedbackComponent } from './components/modal-feedback/modal-feedback.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent,   
+    AppComponent,
+    ModalCompanyComponent,
+    ModalFeedbackComponent,   
   ],
   imports: [
     BrowserModule,

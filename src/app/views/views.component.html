@@ -17,17 +17,32 @@
     </div> -->
 
     <div class="buttons ms-auto">
-      <button class="btn btn-sm btn-outline-success px-3" (click)="goLogin()" *ngIf="!authSrv.isAuthenticated"><i class="fa fa-lock me-2"></i>Login</button>
-      <button class="btn btn-sm" (click)="logout()" *ngIf="authSrv.isAuthenticated"><i class="fa fa-sign-out me-2"></i>Logout</button>
+      <div ngbDropdown display="dynamic" placement="bottom-end" *ngIf="authSrv.isAuthenticated">
+        <button type="button" class="btn btn-sm" ngbDropdownToggle>
+          <i class="fa fa-user"></i>
+        </button>
+        <div ngbDropdownMenu>
+          <!-- <button ngbDropdownItem>Edit</button>
+            -->
+          <button ngbDropdownItem (click)="deleteAccount()" *ngIf="authSrv.getRole === 'user'">
+            <i class="fa fa-exclamation-triangle me-2"></i>Excluir conta</button>
+          <button ngbDropdownItem (click)="goAdmin()" *ngIf="authSrv.isAuthenticated && authSrv.getRole === 'admin'">
+            <i class="fa fa-user me-2"></i>Admin</button>
+          <div class="dropdown-divider"></div>
+          <button ngbDropdownItem (click)="logout()" *ngIf="authSrv.isAuthenticated"><i
+              class="fa fa-sign-out me-2"></i>Logout</button>
+        </div>
+      </div>
+
+
+      <button class="btn btn-sm btn-outline-success px-3" (click)="goLogin()" *ngIf="!authSrv.isAuthenticated">
+        <i class="fa fa-lock me-2"></i>Login</button>
+
     </div>
   </div>
 </nav>
 
 <router-outlet></router-outlet>
-
-<div class="congrats" *ngIf="diagnosticSrv.animationSuccess.getValue()">
-  <ng-lottie [options]="options" (complete)="onComplete()"></ng-lottie>
-</div>
 
 <footer class="footer d-flex align-items-center">
   <div class="container text-center">

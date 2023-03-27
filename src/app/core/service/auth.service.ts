@@ -1,6 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
+import jwtDecode from "jwt-decode";
 import { ToastrService } from "ngx-toastr";
 import { BehaviorSubject, firstValueFrom, Observable } from "rxjs";
 import { environment } from "src/environments/environment";
@@ -17,7 +18,7 @@ export class AuthService {
   private _user: BehaviorSubject<IUser | null> = new BehaviorSubject<IUser | null>(null)
   public user: Observable<IUser | null> = this._user.asObservable()
 
-  constructor(private http: HttpClient, private router: Router, private toastSrv: ToastrService) {}
+  constructor(private http: HttpClient, private router: Router, private toastSrv: ToastrService) { }
 
   get getToken(): string | null {
     return localStorage.getItem('auth.token')
@@ -25,6 +26,14 @@ export class AuthService {
 
   get isAuthenticated(): boolean {
     return (this.getToken !== null)
+  }
+
+  get getRole(): string | null {
+    if (this.getToken) {
+      const user = jwtDecode<any>(this.getToken)
+      return user.role
+    }
+    return null
   }
 
   /**
@@ -47,7 +56,11 @@ export class AuthService {
 
   resetPassword(auth: IAuth) {
     return firstValueFrom(this.http.post(`${this.URL}auth/change-password`, auth))
-     
+  }
+
+
+  deleteAccount(password: string) {
+    return firstValueFrom(this.http.post(`${this.URL}user/delete`, { password }))
   }
 
   /**
@@ -58,7 +71,7 @@ export class AuthService {
    */
   redirectLoginUser(res: IAuthResponse) {
     this._user.next(res.user)
-    localStorage.setItem('auth.token', res.token)   
+    localStorage.setItem('auth.token', res.token)
     this.router.navigate(['views']);
   }
 

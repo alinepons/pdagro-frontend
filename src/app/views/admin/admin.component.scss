@@ -1,26 +1,43 @@
 .comment {
     font-size: 13px;
     font-style: italic;
-    border-left: 4px solid #4EB755;
+    border-left: 4px solid #4eb755;
     border-radius: 4px 0 0 4px;
     padding: 4px 10px;
     background-color: rgb(245, 245, 245);
 }
 
 .dropdown-toggle:after {
-    content: none
+    content: none;
+}
+
+.nav-pills {
+    li {
+        .nav-link {
+            color: #388933;
+            padding: 4px 16px !important;
+        }
+
+        .active {
+            background-color: #388933 !important;
+            color: #f2f2f2 !important;
+        }
+    }
 }
 
 th,
 td {
     height: 50px;
     vertical-align: middle;
+    font-size: 14px;
 }
 
-
+.selectable {
+    cursor: pointer;
+}
 
 .btnLink {
-    color: #015A4D;
+    color: #015a4d;
     font-weight: 600;
     cursor: pointer;
 
@@ -30,7 +47,7 @@ td {
 }
 
 .cardDiagnostic {
-    color: #015A4D;
+    color: #015a4d;
     font-weight: 600;
     cursor: pointer;
     display: flex;
@@ -50,13 +67,4 @@ td {
             font-size: 10px;
         }
     }
-}
-
-.congrats {
-    position: absolute;
-    z-index: 9999;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
 }

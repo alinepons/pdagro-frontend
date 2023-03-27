@@ -1,0 +1,36 @@
+<div class="card">
+
+    <div class="card-header p-3 d-flex justify-content-between align-items-center">
+        <h5 class="card-title m-0">Empresa</h5>
+        <button type="button" class="btn" (click)="closeModal(null)">
+            <i class="fa fa-times fs-5"></i>
+        </button>
+    </div>
+    <div class="card-body">
+        <div class="d-flex align-items-start justify-content-between">
+            <div class="overview">
+                <p>Nome: <span>{{data.name}}</span></p>
+                <p>CNPJ: <span>{{data.cnpj}}</span></p>
+
+                <p>Porte: <span>{{data.info.question_1}}</span></p>
+                <p>Atividade: <span *ngFor="let item of toArray(data.info.question_2); let i = index">{{item}}{{ i <
+                            (toArray(data.info.question_2).length - 1) ? ', ' :'' }}</span>
+                </p>
+                <p>Escolaridade do gestor: <span>{{data.info.question_3}}</span></p>
+                <p>Fornação do gestor: <span>{{data.info.question_5}}</span></p>
+                <p>Quantidade de colaboradores: <span>{{data.info.question_6}}</span></p>
+
+            </div>
+
+        </div>
+    </div>
+    <div class="card-footer p-3 d-flex justify-content-between">
+        <button class="btn btn-danger btn-sm px-3 m-0 mt-2 ms-md-2 mt-md-0" (click)="deleteCompany(data._id)">
+            <i class="fa fa-trash me-1"></i> Excluir empresa
+        </button>
+        <button class="btn btn-secondary btn-sm px-3" (click)="closeModal(null)">
+            <i class="fa fa-times me-1"></i> Fechar
+        </button>
+    </div>
+
+</div>

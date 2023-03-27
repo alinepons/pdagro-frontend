@@ -27,7 +27,7 @@ export class CompanyService {
   }
 
   deleteCompany(companyId: string) {
-    return this.http.delete(`${this.URL}company/delete?id=${companyId}`)
+    return firstValueFrom(this.http.delete(`${this.URL}company/delete?id=${companyId}`))
   }
 
   getCompany(id?: string) {
@@ -35,6 +35,8 @@ export class CompanyService {
     return firstValueFrom(this.http.get(`${this.URL}${END_POINT}`))
   }
 
-
+  getAllCompany() {
+    return firstValueFrom(this.http.get(`${this.URL}company/readAll`))
+  }
 
 }

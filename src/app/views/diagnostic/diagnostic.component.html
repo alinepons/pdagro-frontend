@@ -40,11 +40,21 @@
                         <!-- Etapas -->
                         <fieldset [style.display]="formActive !== 'proccess' ? 'none':'block'">
                             <form [formGroup]="formProccess">
-                                <div class="p-4 mb-4 border rounded">
+                                <div class="mb-4 p-2">
                                     <h5 class="fs-title">Processos</h5>
-                                    <div class="row">
-                                        <div class="col-md-12 mb-3" *ngFor="let item of questionsProccessList">
-                                            <p>{{item._id}}) {{item.weight_question}} - {{item.title}}</p>
+                                    <div class="row p-1">
+                                        <div class="col-md-12 mb-3 rounded shadow p-4" *ngFor="let item of questionsProccessList">
+                                            <div class="d-flex align-items-center justify-content-end">
+                                            <div class="tag bg-primary text-white d-inline-flex align-items-center justify-content-center">
+                                                Peso {{item.weight_question}}
+                                            </div>   
+                                            <div *ngIf="item.weight_question > 1" class="tag d-inline-flex align-items-center justify-content-center ms-1"
+                                                [class]="getClassTag(item.weight_question)">
+                                                {{getTextTag(item.weight_question)}}
+                                            </div>                                              
+                                            </div>
+
+                                            <p>{{item._id}}) {{item.title}}</p>
                                             <p class="comment" *ngIf="item.comment">{{item.comment}}</p>
                                             <ng-container>
                                                 <div *ngFor="let option of item.options">
@@ -66,10 +76,19 @@
                         </fieldset>
                         <fieldset [style.display]="formActive !== 'law' ? 'none':'block'">
                             <form [formGroup]="formLaw">
-                                <div class="p-4 mb-4 border rounded">
+                                <div class="p-2 mb-4">
                                     <h5 class="fs-title">Lei/Norma</h5>
-                                    <div class="row">
-                                        <div class="col-md-12 mb-3" *ngFor="let item of questionsLawList">
+                                    <div class="row p-1">
+                                        <div class="col-md-12 mb-3 rounded shadow p-4" *ngFor="let item of questionsLawList">
+                                            <div class="d-flex align-items-center justify-content-end">
+                                                <div class="tag border bg-primary text-white d-inline-flex align-items-center justify-content-center">
+                                                    Peso {{item.weight_question}}
+                                                </div>    
+                                                <div *ngIf="item.weight_question > 1" class="tag d-inline-flex align-items-center justify-content-center ms-1"
+                                                    [class]="getClassTag(item.weight_question)">
+                                                    {{getTextTag(item.weight_question)}}
+                                                </div>                                            
+                                                </div>
                                             <p>{{item._id}}) {{item.title}}</p>
                                             <p class="comment" *ngIf="item.comment">{{item.comment}}</p>
                                             <ng-container>
@@ -94,10 +113,19 @@
                         </fieldset>
                         <fieldset [style.display]="formActive !== 'tech' ? 'none':'block'">
                             <form [formGroup]="formTech">
-                                <div class="p-4 mb-4 border rounded">
+                                <div class="p-2 mb-4">
                                     <h5 class="fs-title">Tecnologia</h5>
-                                    <div class="row">
-                                        <div class="col-md-12 mb-3" *ngFor="let item of questionsTechList">
+                                    <div class="row p-1">
+                                        <div class="col-md-12 mb-3 rounded shadow p-4" *ngFor="let item of questionsTechList">
+                                            <div class="d-flex align-items-center justify-content-end">
+                                                <div class="tag border bg-primary text-white d-inline-flex align-items-center justify-content-center">
+                                                    Peso {{item.weight_question}}
+                                                </div>       
+                                                <div *ngIf="item.weight_question > 1" class="tag d-inline-flex align-items-center justify-content-center ms-1"
+                                                    [class]="getClassTag(item.weight_question)">
+                                                    {{getTextTag(item.weight_question)}}
+                                                </div>                                         
+                                                </div>
                                             <p>{{item._id}}) {{item.title}}</p>
                                             <p class="comment" *ngIf="item.comment">{{item.comment}}</p>
                                             <ng-container>
@@ -122,10 +150,19 @@
                         </fieldset>
                         <fieldset [style.display]="formActive !== 'learning' ? 'none':'block'">
                             <form [formGroup]="formLearning">
-                                <div class="p-4 mb-4 border rounded">
+                                <div class="p-2 mb-4">
                                     <h5 class="fs-title">Aprendizado</h5>
-                                    <div class="row">
-                                        <div class="col-md-12 mb-3" *ngFor="let item of questionsLearningList">
+                                    <div class="row p-1">
+                                        <div class="col-md-12 mb-3 rounded shadow p-4" *ngFor="let item of questionsLearningList">
+                                            <div class="d-flex align-items-center justify-content-end">
+                                                <div class="tag border bg-primary text-white d-inline-flex align-items-center justify-content-center">
+                                                    Peso {{item.weight_question}}
+                                                </div>         
+                                                <div *ngIf="item.weight_question > 1" class="tag d-inline-flex align-items-center justify-content-center ms-1"
+                                                    [class]="getClassTag(item.weight_question)">
+                                                    {{getTextTag(item.weight_question)}}
+                                                </div>                                       
+                                                </div>
                                             <p>{{item._id}}) {{item.title}}</p>
                                             <p class="comment" *ngIf="item.comment">{{item.comment}}</p>
                                             <ng-container>
@@ -152,10 +189,10 @@
                         </fieldset>
                         <fieldset [style.display]="formActive !== 'feedback' || isFeedback ? 'none':'block'">
                             <form [formGroup]="formFeedback">
-                                <div class="p-4 mb-4 border rounded">
+                                <div class="p-2 mb-4">
                                     <h5 class="fs-title">Avaliação</h5>
-                                    <div class="row">
-                                        <div class="col-md-12 mb-3" *ngFor="let item of questionsFeedbackList">
+                                    <div class="row p-1">
+                                        <div class="col-md-12 mb-3 rounded shadow p-4" *ngFor="let item of questionsFeedbackList">
                                             <p>{{item._id}}) {{item.title}}</p>
                                             <p class="comment" *ngIf="item.comment">{{item.comment}}</p>
                                             <ng-container>

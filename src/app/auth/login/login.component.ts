@@ -64,6 +64,7 @@ export class LoginComponent implements OnInit {
     }
 
     this.loading = true
+    localStorage.clear()
     
     this.authSrv.login(model)
       .then((res: IAuthResponse) => {

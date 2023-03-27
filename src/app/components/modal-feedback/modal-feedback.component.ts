@@ -6,14 +6,13 @@ import { DiagnosticService } from 'src/app/core/service/diagnostic.service';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-modal-result',
-  templateUrl: './modal-result.component.html',
-  styleUrls: ['./modal-result.component.scss']
+  selector: 'app-modal-feedback',
+  templateUrl: './modal-feedback.component.html',
+  styleUrls: ['./modal-feedback.component.scss']
 })
-export class ModalResultComponent implements OnInit {
+export class ModalFeedbackComponent implements OnInit {
 
   @Input() data: any
-  imagePath: string = ""
 
   constructor(
     public activeModal: NgbActiveModal,
@@ -26,8 +25,12 @@ export class ModalResultComponent implements OnInit {
     console.log(this.data)
   }
 
-  toArray(data: any) {
-    return JSON.parse(data)
+  objToArray(data: any) {
+    let items: any[] = []
+    Object.keys(data).forEach((k) => {
+      items.push(data[k])
+    })
+    return items
   }
 
   getCertificate() {
@@ -41,11 +44,11 @@ export class ModalResultComponent implements OnInit {
       })
   }
 
-  deleteDiagnostic(id: string) {
+  deleteFeedback(id: string) {
 
     Swal.fire({
       title: 'Atenção',
-      text: "Deseja excluir o diagnóstico selecionado? Essa ação não poderá ser desfeita!",
+      text: "Deseja excluir a avaliação selecionada? Essa ação não poderá ser desfeita!",
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#d33',
@@ -61,15 +64,15 @@ export class ModalResultComponent implements OnInit {
       }
     }).then((result) => {
       if (result.isConfirmed) {
-        this.diagnosticSrv.deleteDiagnostic(id)
-          .then((res) => {
-            this.closeModal('delete')
-            this.toastSrv.success('Diagnóstico excluído com sucesso!', 'PDAgro')
-          })
-          .catch((err) => {
-            console.log(err)
-            this.toastSrv.warning('Verifique sua conexão e tente novamente!', 'PDAgro')
-          })
+        // this.diagnosticSrv.deleteDiagnostic(id)
+        //   .then((res) => {
+        //     this.closeModal('delete')
+        //     this.toastSrv.success('Avaliação excluída com sucesso!', 'PDAgro')
+        //   })
+        //   .catch((err) => {
+        //     console.log(err)
+        //     this.toastSrv.warning('Verifique sua conexão e tente novamente!', 'PDAgro')
+        //   })
 
       }
     })
