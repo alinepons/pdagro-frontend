@@ -71,7 +71,7 @@
                                 {{item.reply}}</span></p>
                         <div class="feedback alert alert-info p-0 p-1 px-2 m-0 mt-2">
                             <i class="fa fa-lightbulb"></i>
-                            <p class="m-0">{{data.questions.proccess[i].feedback}}</p>
+                            <p class="m-0" [innerHtml]="data.questions.proccess[i].feedback | safeHtml"></p>
                         </div>
                     </div>
                 </div>
@@ -94,7 +94,7 @@
                                 {{item.reply}}</span></p>
                         <div class="feedback alert alert-info p-0 p-1 px-2 m-0 mt-2">
                             <i class="fa fa-lightbulb"></i>
-                            <p class="m-0">{{data.questions.tech[i].feedback}}</p>
+                            <div class="m-0" [innerHtml]="data.questions.tech[i].feedback | safeHtml"></div>
                         </div>
                     </div>
                 </div>

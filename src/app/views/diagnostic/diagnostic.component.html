@@ -1,223 +1,258 @@
 <div class="container my-4">
-    <div class="row my-5">
-        <div class="col-md-12 mb-5">
-            <h4>Diagnóstico de Conformidade à LGPD</h4>
-            <div class="row" *ngIf="company">
-                <div class="col-md-12 mt-3 mb-2">
-                    <div class="border rounded p-2 px-3 bg-light">
-                        <div class="d-flex">
-                            <p class="m-0 fw-bold">Empresa:</p>
-                            <p class="m-0 ms-2">{{company.name}}</p>
-                        </div>
-                        <div class="d-flex">
-                            <p class="m-0 fw-bold">CNPJ:</p>
-                            <p class="m-0 ms-2">{{company.cnpj}}</p>
-                        </div>
-                    </div>
-                </div>
+  <div class="row my-5">
+    <div class="col-md-12 mb-5">
+      <h4>Diagnóstico de Conformidade à LGPD</h4>
+      <div class="row" *ngIf="company">
+        <div class="col-md-12 mt-3 mb-2">
+          <div class="border rounded p-2 px-3 bg-light">
+            <div class="d-flex">
+              <p class="m-0 fw-bold">Empresa:</p>
+              <p class="m-0 ms-2">{{company.name}}</p>
             </div>
-            <div class="row">
-                <div class="col-md-12 mt-4">
-                    <div id="msform">
-                        <!-- Barra de progresso -->
-                        <ul id="progressbar"class="text-center p-0" [class]="{'feedback': !isFeedback}">
-                            <li [class]="{'active': formProccess.valid || formActive === 'proccess'}" id="proccess">
-                                <strong>Processos</strong>
-                            </li>
-                            <li [class]="{'active': formLaw.valid || formActive === 'law'}" id="law">
-                                <strong>Lei/Norma</strong>
-                            </li>
-                            <li [class]="{'active': formTech.valid || formActive === 'tech'}" id="tech">
-                                <strong>Tecnologia</strong>
-                            </li>
-                            <li [class]="{'active': formLearning.valid || formActive === 'learning'}" id="learning">
-                                <strong>Aprendizado</strong>
-                            </li>
-                            <li class="feedback" *ngIf="!isFeedback" [class]="{'active': formFeedback.valid || formActive === 'feedback'}" id="feedback">
-                                <strong>Avaliação</strong>
-                            </li>
-                        </ul>
-                        <!-- Etapas -->
-                        <fieldset [style.display]="formActive !== 'proccess' ? 'none':'block'">
-                            <form [formGroup]="formProccess">
-                                <div class="mb-4 p-2">
-                                    <h5 class="fs-title">Processos</h5>
-                                    <div class="row p-1">
-                                        <div class="col-md-12 mb-3 rounded shadow p-4" *ngFor="let item of questionsProccessList">
-                                            <div class="d-flex align-items-center justify-content-end">
-                                            <div class="tag bg-primary text-white d-inline-flex align-items-center justify-content-center">
-                                                Peso {{item.weight_question}}
-                                            </div>   
-                                            <div *ngIf="item.weight_question > 1" class="tag d-inline-flex align-items-center justify-content-center ms-1"
-                                                [class]="getClassTag(item.weight_question)">
-                                                {{getTextTag(item.weight_question)}}
-                                            </div>                                              
-                                            </div>
-
-                                            <p>{{item._id}}) {{item.title}}</p>
-                                            <p class="comment" *ngIf="item.comment">{{item.comment}}</p>
-                                            <ng-container>
-                                                <div *ngFor="let option of item.options">
-                                                    <label class="form-check-label">
-                                                        <input class="form-check-input me-2" type="radio"
-                                                            [value]="{_id: item._id, question: item.title, weight_question: item.weight_question, reply: option.text, weight_option: option.weight_option}"
-                                                            [formControlName]="'question_'+ item._id">
-                                                        <span>{{option.weight_option}} - {{option.text}}</span>
-                                                    </label>
-                                                </div>
-                                            </ng-container>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button type="button" class="btn btn-warning px-4 me-2" [routerLink]="['/views/company']">Cancelar</button>
-                                <button type="button" [disabled]="formProccess.invalid" class="btn btn-success px-4"
-                                    (click)="nextTab('law')">Avançar</button>
-                            </form>
-                        </fieldset>
-                        <fieldset [style.display]="formActive !== 'law' ? 'none':'block'">
-                            <form [formGroup]="formLaw">
-                                <div class="p-2 mb-4">
-                                    <h5 class="fs-title">Lei/Norma</h5>
-                                    <div class="row p-1">
-                                        <div class="col-md-12 mb-3 rounded shadow p-4" *ngFor="let item of questionsLawList">
-                                            <div class="d-flex align-items-center justify-content-end">
-                                                <div class="tag border bg-primary text-white d-inline-flex align-items-center justify-content-center">
-                                                    Peso {{item.weight_question}}
-                                                </div>    
-                                                <div *ngIf="item.weight_question > 1" class="tag d-inline-flex align-items-center justify-content-center ms-1"
-                                                    [class]="getClassTag(item.weight_question)">
-                                                    {{getTextTag(item.weight_question)}}
-                                                </div>                                            
-                                                </div>
-                                            <p>{{item._id}}) {{item.title}}</p>
-                                            <p class="comment" *ngIf="item.comment">{{item.comment}}</p>
-                                            <ng-container>
-                                                <div *ngFor="let option of item.options">
-                                                    <label class="form-check-label">
-                                                        <input class="form-check-input me-2" type="radio"
-                                                            [value]="{_id: item._id, question: item.title, weight_question: item.weight_question, reply: option.text, weight_option: option.weight_option}"
-                                                            [formControlName]="'question_'+ item._id">
-                                                        <span>{{option.weight_option}} - {{option.text}}</span>
-                                                    </label>
-                                                </div>
-                                            </ng-container>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button type="button" class="btn btn-warning px-4 me-2" [routerLink]="['/views/company']">Cancelar</button>
-                                <button type="button" class="btn btn-secondary px-4 me-2"
-                                    (click)="nextTab('proccess')">Voltar</button>
-                                <button type="button" [disabled]="formLaw.invalid" class="btn btn-success px-4"
-                                    (click)="nextTab('tech')">Avançar</button>
-                            </form>
-                        </fieldset>
-                        <fieldset [style.display]="formActive !== 'tech' ? 'none':'block'">
-                            <form [formGroup]="formTech">
-                                <div class="p-2 mb-4">
-                                    <h5 class="fs-title">Tecnologia</h5>
-                                    <div class="row p-1">
-                                        <div class="col-md-12 mb-3 rounded shadow p-4" *ngFor="let item of questionsTechList">
-                                            <div class="d-flex align-items-center justify-content-end">
-                                                <div class="tag border bg-primary text-white d-inline-flex align-items-center justify-content-center">
-                                                    Peso {{item.weight_question}}
-                                                </div>       
-                                                <div *ngIf="item.weight_question > 1" class="tag d-inline-flex align-items-center justify-content-center ms-1"
-                                                    [class]="getClassTag(item.weight_question)">
-                                                    {{getTextTag(item.weight_question)}}
-                                                </div>                                         
-                                                </div>
-                                            <p>{{item._id}}) {{item.title}}</p>
-                                            <p class="comment" *ngIf="item.comment">{{item.comment}}</p>
-                                            <ng-container>
-                                                <div *ngFor="let option of item.options">
-                                                    <label class="form-check-label">
-                                                        <input class="form-check-input me-2" type="radio"
-                                                            [value]="{_id: item._id, question: item.title, weight_question: item.weight_question, reply: option.text, weight_option: option.weight_option}"
-                                                            [formControlName]="'question_'+ item._id">
-                                                        <span>{{option.weight_option}} - {{option.text}}</span>
-                                                    </label>
-                                                </div>
-                                            </ng-container>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button type="button" class="btn btn-warning px-4 me-2" [routerLink]="['/views/company']">Cancelar</button>
-                                <button type="button" class="btn btn-secondary px-4 me-2"
-                                    (click)="nextTab('law')">Voltar</button>
-                                <button type="button" [disabled]="formTech.invalid" class="btn btn-success px-4"
-                                    (click)="nextTab('learning')">Avançar</button>
-                            </form>
-                        </fieldset>
-                        <fieldset [style.display]="formActive !== 'learning' ? 'none':'block'">
-                            <form [formGroup]="formLearning">
-                                <div class="p-2 mb-4">
-                                    <h5 class="fs-title">Aprendizado</h5>
-                                    <div class="row p-1">
-                                        <div class="col-md-12 mb-3 rounded shadow p-4" *ngFor="let item of questionsLearningList">
-                                            <div class="d-flex align-items-center justify-content-end">
-                                                <div class="tag border bg-primary text-white d-inline-flex align-items-center justify-content-center">
-                                                    Peso {{item.weight_question}}
-                                                </div>         
-                                                <div *ngIf="item.weight_question > 1" class="tag d-inline-flex align-items-center justify-content-center ms-1"
-                                                    [class]="getClassTag(item.weight_question)">
-                                                    {{getTextTag(item.weight_question)}}
-                                                </div>                                       
-                                                </div>
-                                            <p>{{item._id}}) {{item.title}}</p>
-                                            <p class="comment" *ngIf="item.comment">{{item.comment}}</p>
-                                            <ng-container>
-                                                <div *ngFor="let option of item.options">
-                                                    <label class="form-check-label">
-                                                        <input class="form-check-input me-2" type="radio"
-                                                            [value]="{_id: item._id, question: item.title, weight_question: item.weight_question, reply: option.text, weight_option: option.weight_option}"
-                                                            [formControlName]="'question_'+ item._id">
-                                                        <span>{{option.weight_option}} - {{option.text}}</span>
-                                                    </label>
-                                                </div>
-                                            </ng-container>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button type="button" class="btn btn-warning px-4 me-2" [routerLink]="['/views/company']">Cancelar</button>
-                                <button type="button" class="btn btn-secondary px-4 me-2"
-                                    (click)="nextTab('learning')">Voltar</button>
-                                <button type="button" [disabled]="formLearning.invalid" *ngIf="!isFeedback" class="btn btn-success px-4"
-                                    (click)="nextTab('feedback')">Avançar</button>
-                                    <button type="button" [disabled]="formLearning.invalid" *ngIf="isFeedback" class="btn btn-success px-4"
-                                    (click)="submitDisgnostic()">Finalizar</button>
-                            </form>
-                        </fieldset>
-                        <fieldset [style.display]="formActive !== 'feedback' || isFeedback ? 'none':'block'">
-                            <form [formGroup]="formFeedback">
-                                <div class="p-2 mb-4">
-                                    <h5 class="fs-title">Avaliação</h5>
-                                    <div class="row p-1">
-                                        <div class="col-md-12 mb-3 rounded shadow p-4" *ngFor="let item of questionsFeedbackList">
-                                            <p>{{item._id}}) {{item.title}}</p>
-                                            <p class="comment" *ngIf="item.comment">{{item.comment}}</p>
-                                            <ng-container>
-                                                <div *ngFor="let option of item.options">
-                                                    <label class="form-check-label">
-                                                        <input class="form-check-input me-2" type="radio"
-                                                            [value]="{_id: item._id, question: item.title, weight_question: item.weight_question, reply: option.text, weight_option: option.weight_option}"
-                                                            [formControlName]="'question_'+ item._id">
-                                                        <span>{{option.text}}</span>
-                                                    </label>
-                                                </div>
-                                            </ng-container>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button type="button" class="btn btn-warning px-4 me-2" [routerLink]="['/views/company']">Cancelar</button>
-                                <button type="button" class="btn btn-secondary px-4 me-2"
-                                    (click)="nextTab('learning')">Voltar</button>
-                                <button type="button" [disabled]="formFeedback.invalid" class="btn btn-success px-4"
-                                    (click)="submitDisgnostic()">Finalizar</button>
-                            </form>
-                        </fieldset>
-                    </div>
-                </div>
+            <div class="d-flex">
+              <p class="m-0 fw-bold">CNPJ:</p>
+              <p class="m-0 ms-2">{{company.cnpj}}</p>
             </div>
+          </div>
         </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 mt-4">
+          <div id="msform">
+            <!-- Barra de progresso -->
+            <ul id="progressbar" class="text-center p-0" [class]="{'feedback': !isFeedback}">
+              <li [class]="{'active': formProccess.valid || formActive === 'proccess'}" id="proccess">
+                <strong>Processos</strong>
+              </li>
+              <li [class]="{'active': formLaw.valid || formActive === 'law'}" id="law">
+                <strong>Lei/Norma</strong>
+              </li>
+              <li [class]="{'active': formTech.valid || formActive === 'tech'}" id="tech">
+                <strong>Tecnologia</strong>
+              </li>
+              <li [class]="{'active': formLearning.valid || formActive === 'learning'}" id="learning">
+                <strong>Aprendizado</strong>
+              </li>
+              <li class="feedback" *ngIf="!isFeedback"
+                [class]="{'active': formFeedback.valid || formActive === 'feedback'}" id="feedback">
+                <strong>Avaliação</strong>
+              </li>
+            </ul>
+            <!-- Etapas -->
+            <fieldset [style.display]="formActive !== 'proccess' ? 'none':'block'">
+              <form [formGroup]="formProccess">
+                <div class="mb-4 p-2">
+
+                  <div class="d-flex align-items-center py-4">
+                    <h5 class="fs-title m-0">Processos</h5>
+                    <div class="d-flex align-items-center justify-content-center ms-2 bg-success text-white p-0 px-2 py-1 rounded">
+                    <small>Peso 4</small>
+                    </div>
+                  </div>
+
+                  <div class="row p-1">
+                    <div class="col-md-12 mb-3 rounded shadow p-4" *ngFor="let item of questionsProccessList">
+                      <div class="d-flex align-items-center justify-content-end">
+                        <div class="tag bg-primary text-white d-inline-flex align-items-center justify-content-center">
+                          Peso {{item.weight_question}}
+                        </div>
+                        <div *ngIf="item.weight_question > 1"
+                          class="tag d-inline-flex align-items-center justify-content-center ms-1"
+                          [class]="getClassTag(item.weight_question)">
+                          {{getTextTag(item.weight_question)}}
+                        </div>
+                      </div>
+
+                      <p>{{item._id}}) {{item.title}}</p>
+                      <p class="comment" *ngIf="item.comment">{{item.comment}}</p>
+                      <ng-container>
+                        <div *ngFor="let option of item.options">
+                          <label class="form-check-label">
+                            <input class="form-check-input me-2" type="radio"
+                              [value]="{_id: item._id, question: item.title, weight_question: item.weight_question, reply: option.text, weight_option: option.weight_option}"
+                              [formControlName]="'question_'+ item._id">
+                            <span>{{option.weight_option}} - {{option.text}}</span>
+                          </label>
+                        </div>
+                      </ng-container>
+                    </div>
+                  </div>
+                </div>
+                <button type="button" class="btn btn-warning px-4 me-2"
+                  [routerLink]="['/views/company']">Cancelar</button>
+                <button type="button" [disabled]="formProccess.invalid" class="btn btn-success px-4"
+                  (click)="nextTab('law')">Avançar</button>
+              </form>
+            </fieldset>
+            <fieldset [style.display]="formActive !== 'law' ? 'none':'block'">
+              <form [formGroup]="formLaw">
+                <div class="p-2 mb-4">
+                  <div class="d-flex align-items-center py-4">
+                    <h5 class="fs-title m-0">Lei/Norma</h5>
+                    <div class="d-flex align-items-center justify-content-center ms-2 bg-success text-white p-0 px-2 py-1 rounded">
+                    <small>Peso 4</small>
+                    </div>
+                  </div>
+                  <div class="row p-1">
+                    <div class="col-md-12 mb-3 rounded shadow p-4" *ngFor="let item of questionsLawList">
+                      <div class="d-flex align-items-center justify-content-end">
+                        <div
+                          class="tag border bg-primary text-white d-inline-flex align-items-center justify-content-center">
+                          Peso {{item.weight_question}}
+                        </div>
+                        <div *ngIf="item.weight_question > 1"
+                          class="tag d-inline-flex align-items-center justify-content-center ms-1"
+                          [class]="getClassTag(item.weight_question)">
+                          {{getTextTag(item.weight_question)}}
+                        </div>
+                      </div>
+                      <p>{{item._id}}) {{item.title}}</p>
+                      <p class="comment" *ngIf="item.comment">{{item.comment}}</p>
+                      <ng-container>
+                        <div *ngFor="let option of item.options">
+                          <label class="form-check-label">
+                            <input class="form-check-input me-2" type="radio"
+                              [value]="{_id: item._id, question: item.title, weight_question: item.weight_question, reply: option.text, weight_option: option.weight_option}"
+                              [formControlName]="'question_'+ item._id">
+                            <span>{{option.weight_option}} - {{option.text}}</span>
+                          </label>
+                        </div>
+                      </ng-container>
+                    </div>
+                  </div>
+                </div>
+                <button type="button" class="btn btn-warning px-4 me-2"
+                  [routerLink]="['/views/company']">Cancelar</button>
+                <button type="button" class="btn btn-secondary px-4 me-2" (click)="nextTab('proccess')">Voltar</button>
+                <button type="button" [disabled]="formLaw.invalid" class="btn btn-success px-4"
+                  (click)="nextTab('tech')">Avançar</button>
+              </form>
+            </fieldset>
+            <fieldset [style.display]="formActive !== 'tech' ? 'none':'block'">
+              <form [formGroup]="formTech">
+                <div class="p-2 mb-4">
+                  <div class="d-flex align-items-center py-4">
+                    <h5 class="fs-title m-0">Tecnologia</h5>
+                    <div class="d-flex align-items-center justify-content-center ms-2 bg-success text-white p-0 px-2 py-1 rounded">
+                    <small>Peso 3</small>
+                    </div>
+                  </div>
+                  <div class="row p-1">
+                    <div class="col-md-12 mb-3 rounded shadow p-4" *ngFor="let item of questionsTechList">
+                      <div class="d-flex align-items-center justify-content-end">
+                        <div
+                          class="tag border bg-primary text-white d-inline-flex align-items-center justify-content-center">
+                          Peso {{item.weight_question}}
+                        </div>
+                        <div *ngIf="item.weight_question > 1"
+                          class="tag d-inline-flex align-items-center justify-content-center ms-1"
+                          [class]="getClassTag(item.weight_question)">
+                          {{getTextTag(item.weight_question)}}
+                        </div>
+                      </div>
+                      <p>{{item._id}}) {{item.title}}</p>
+                      <p class="comment" *ngIf="item.comment">{{item.comment}}</p>
+                      <ng-container>
+                        <div *ngFor="let option of item.options">
+                          <label class="form-check-label">
+                            <input class="form-check-input me-2" type="radio"
+                              [value]="{_id: item._id, question: item.title, weight_question: item.weight_question, reply: option.text, weight_option: option.weight_option}"
+                              [formControlName]="'question_'+ item._id">
+                            <span>{{option.weight_option}} - {{option.text}}</span>
+                          </label>
+                        </div>
+                      </ng-container>
+                    </div>
+                  </div>
+                </div>
+                <button type="button" class="btn btn-warning px-4 me-2"
+                  [routerLink]="['/views/company']">Cancelar</button>
+                <button type="button" class="btn btn-secondary px-4 me-2" (click)="nextTab('law')">Voltar</button>
+                <button type="button" [disabled]="formTech.invalid" class="btn btn-success px-4"
+                  (click)="nextTab('learning')">Avançar</button>
+              </form>
+            </fieldset>
+            <fieldset [style.display]="formActive !== 'learning' ? 'none':'block'">
+              <form [formGroup]="formLearning">
+                <div class="p-2 mb-4">
+                  <div class="d-flex align-items-center py-4">
+                    <h5 class="fs-title m-0">Aprendizado</h5>
+                    <div class="d-flex align-items-center justify-content-center ms-2 bg-success text-white p-0 px-2 py-1 rounded">
+                    <small>Peso 2</small>
+                    </div>
+                  </div>
+                  <div class="row p-1">
+                    <div class="col-md-12 mb-3 rounded shadow p-4" *ngFor="let item of questionsLearningList">
+                      <div class="d-flex align-items-center justify-content-end">
+                        <div
+                          class="tag border bg-primary text-white d-inline-flex align-items-center justify-content-center">
+                          Peso {{item.weight_question}}
+                        </div>
+                        <div *ngIf="item.weight_question > 1"
+                          class="tag d-inline-flex align-items-center justify-content-center ms-1"
+                          [class]="getClassTag(item.weight_question)">
+                          {{getTextTag(item.weight_question)}}
+                        </div>
+                      </div>
+                      <p>{{item._id}}) {{item.title}}</p>
+                      <p class="comment" *ngIf="item.comment">{{item.comment}}</p>
+                      <ng-container>
+                        <div *ngFor="let option of item.options">
+                          <label class="form-check-label">
+                            <input class="form-check-input me-2" type="radio"
+                              [value]="{_id: item._id, question: item.title, weight_question: item.weight_question, reply: option.text, weight_option: option.weight_option}"
+                              [formControlName]="'question_'+ item._id">
+                            <span>{{option.weight_option}} - {{option.text}}</span>
+                          </label>
+                        </div>
+                      </ng-container>
+                    </div>
+                  </div>
+                </div>
+                <button type="button" class="btn btn-warning px-4 me-2"
+                  [routerLink]="['/views/company']">Cancelar</button>
+                <button type="button" class="btn btn-secondary px-4 me-2" (click)="nextTab('learning')">Voltar</button>
+                <button type="button" [disabled]="formLearning.invalid" *ngIf="!isFeedback" class="btn btn-success px-4"
+                  (click)="nextTab('feedback')">Finalizar diagnóstico</button>
+                <button type="button" [disabled]="formLearning.invalid" *ngIf="isFeedback" class="btn btn-success px-4"
+                  (click)="submitDisgnostic()">Finalizar</button>
+              </form>
+            </fieldset>
+            <fieldset [style.display]="formActive !== 'feedback' || isFeedback ? 'none':'block'">
+              <form [formGroup]="formFeedback">
+                <div class="p-2 mb-4">
+                  <h5 class="fs-title">Avaliação</h5>
+                  <p>Falta pouco! Para finalizar o diagnóstico precisamos saber como foi a sua experiência durante o uso
+                    da plataforma.<br>
+                    Sua percepção irá nos ajudar na implmentação de melhorias e novas funcionalidades.
+                  </p>
+                  <div class="row p-1">
+                    <div class="col-md-12 mb-3 rounded shadow p-4" *ngFor="let item of questionsFeedbackList">
+                      <p>{{item._id}}) {{item.title}}</p>
+                      <p class="comment" *ngIf="item.comment">{{item.comment}}</p>
+                      <ng-container>
+                        <div *ngFor="let option of item.options">
+                          <label class="form-check-label">
+                            <input class="form-check-input me-2" type="radio"
+                              [value]="{_id: item._id, question: item.title, weight_question: item.weight_question, reply: option.text, weight_option: option.weight_option}"
+                              [formControlName]="'question_'+ item._id">
+                            <span>{{option.text}}</span>
+                          </label>
+                        </div>
+                      </ng-container>
+                    </div>
+                  </div>
+                </div>
+                <button type="button" class="btn btn-warning px-4 me-2"
+                  [routerLink]="['/views/company']">Cancelar</button>
+                <button type="button" class="btn btn-secondary px-4 me-2" (click)="nextTab('learning')">Voltar</button>
+                <button type="button" [disabled]="formFeedback.invalid" class="btn btn-success px-4"
+                  (click)="submitDisgnostic()">Finalizar</button>
+              </form>
+            </fieldset>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </div>

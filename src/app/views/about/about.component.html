@@ -1,0 +1,165 @@
+<div class="container my-4">
+  <div class="row my-5">
+    <div class="col-md-12 mb-5">
+      <div class="row">
+        <div class="col-md-12">
+          <h3 class="mb-4">Sobre a aplicação</h3>
+          <p>O sistema <b>PdAgro (Privacidade de Dados no Agronegócio)</b> é desenvolvido para disponibilizar a
+             ferramenta de diagnóstico de conformidade à LGPD para o agronegócio com a finalidade de
+              auxiliar os profissionais do setor quanto a adequação de suas organizações.</p>
+
+            <p>O sistema proposto é uma aplicação online que analisa a conformidade com a Lei Geral de 
+            Proteção de Dados, tendo por finalidade auxiliar a tomada de decisão de pequenas e médias 
+            empresas do agronegócio. A interação com o usuário logado permite o acesso a um conjunto 
+            de questões que identificam a conformidade em relação ao tratamento de dados pessoais, 
+            nos moldes da LGPD e da NBR ISO/IEC 27701, organizado em dimensões adaptadas da ferramenta
+            Balanced Scorecard, que avalia o negócio por meio de perspectivas, disponibiliza
+            o nível de conformidade e ainda auxilia na adequação por meio de recomendações.</p>
+
+            <p>A pesquisa faz parte do Programa de Pós-Graduação em Computação Aplicada - Mestrado Acadêmico -
+            da Universidade Federal do Pampa (UNIPAMPA) em parceria com a EMBRAPA Pecuária Sul. Tecnologias
+            empregadas para o desenvolvimento da aplicação frontend: Angular 14 e linguagem Typescript;
+            aplicação backend: NodeJs e Express; banco de dados PostgreSQL.</p>
+          
+            <h3 class="mb-4">Glossário</h3>
+            <p>Lei Geral de Proteção de Dados (LGPD), nº 13.709/2018: contempla os direitos dos titulares
+              de dados pessoais, em casos de tratamento de dados pessoais, realizados por pessoa natural
+              ou pessoa jurídica de direito público ou privado, nas hipóteses em que a lei se aplica.</p>
+
+            <p>NBR ISO/IEC 27701: é uma norma que organiza e avalia a segurança, visando a implementação e
+              conformidade com a Lei nº 13.709/2018, pois, em seu anexo N/A, é encontrado um mapeamento de todos os
+              itens da ISO 27.701 com os artigos correspondentes da LGPD.</p>
+
+            <p>Balanced Scorecard (BSC): ferramenta que possui medição e gestão de desempenho organizacional
+              através de indicadores balanceados.</p>
+
+            <h3 class="mb-4">Descrição da arquitetura do modelo de negócios</h3>
+
+            <p>Para avaliar uma empresa, em relação ao nível de privacidade e proteção dos dados que manipula,
+              existem ferramentas que podem fazer um levantamento do que existe de proteção de dados pessoais
+              e desenvolver uma lista de ações necessárias visando a adequação para empreendedores que precisam
+              tomar uma decisão sobre elementos que orientam a compliance com a lei.</p>
+
+            <p>Conforme os requisitos para o desenvolvimento deste projeto, a ferramenta Balanced Scorecard (BSC)
+              foi selecionada por ser amplamente utilizada e permitir flexibilidade das dimensões, ou seja, podem ser
+              estabelecidas outras perspectivas conforme a necessidade do negócio, com objetivos e medidas limitados
+              até 20 indicadores para uma gestão estratégica eficiente.</p>
+
+            <p>A proposta abarca a adaptação do BSC, com base na LGPD e ISO 27.701 vigentes sobre proteção e privacidade
+              de dados a serem aplicadas para adequação no agronegócio, sob as perspectivas: Processos, Tecnologia,
+              Lei/Norma e Aprendizado apresentadas na Figura 1.</p>
+
+            <!-- Figura1 das dimensões do BSC-->
+            <div class="d-flex justify-content-center py-5">
+              <div class="col-md-6"> 
+                <img src="assets/bsc1_new.png" alt="" class="img-fluid">
+              </div>                
+            </div>
+
+            <p>Entre a perspectiva processos e lei/norma, pergunta-se o que existe de processos alinhados à LGPD e
+              a Norma ISO 27.701 e são feitas indicações para atingir a adequação. Quanto a tecnologia, verifica-se
+              o que existe de processos que usam tecnologia e o que deve estar em conformidade. Por fim, é na
+              perspectiva aprendizado, é analisado se existe formação de pessoas e o que é preciso ser melhor nos
+              processos, assim como na tecnologia. Diante do exposto, é criada a arquitetura do modelo de negócio
+              da Figura 2.</p>
+
+            <!-- Figura2 Arq Modelo de Negócios-->
+            <div class="d-flex justify-content-center py-5">
+              <div class="col-md-6"> 
+                <img src="assets/tool_model4.png" alt="" class="img-fluid">
+              </div>                
+            </div>
+
+            <p>O modelo de negócio está abarcado em uma arquitetura com Módulo Coletor de Dados composto pelo BSC
+              como ferramenta avaliadora, alimentada pelos requisitos da LGPD e da ISO 27.701 em forma de perguntas,
+              divididas em dimensões de processos, lei/norma, tecnologia e aprendizado. A saída é o resultado do
+              índice final de adequação e recomendações. Na sequência são apresentadas as Tabelas 1 a 4 contendo
+              os indicadores para avaliar o desempenho da organização, as metas que trazem a sumarização do 
+              embasamento legal, normativo e as boas práticas como recomendações.</p>
+
+            <!-- Figura3 Tabela BSC Processos-->
+            <div class="d-flex justify-content-center py-5">
+              <div class="col-md-9"> 
+                <img src="assets/dimension_process.png" alt="" class="img-fluid">
+              </div>                
+            </div>
+
+            <!-- Figura4 Tabela BSC Lei/Norma-->
+            <div class="d-flex justify-content-center py-5">
+              <div class="col-md-9"> 
+                <img src="assets/dimension_law.png" alt="" class="img-fluid">
+              </div>                
+            </div>
+
+            <!-- Figura5 Tabela BSC Tecnologia-->
+            <div class="d-flex justify-content-center py-5">
+              <div class="col-md-9"> 
+                <img src="assets/dimension_tech.png" alt="" class="img-fluid">
+              </div>                
+            </div>
+
+            <!-- Figura6 Tabela BSC Aprendizado-->
+            <div class="d-flex justify-content-center py-5">
+              <div class="col-md-9"> 
+                <img src="assets/dimension_learning.png" alt="" class="img-fluid">
+              </div>                
+            </div>
+
+            <p>Diante do exposto, efetuados os cálculos dos índices de cada dimensão, o índice geral com a
+              aplicação de média aritmética ponderada: na equação 1, o produto entre as respostas das perguntas
+              (Pn) e o peso (Sn) são somadas e divididos pela soma dos pesos; na equação PdAgro, o produto entre
+              a soma das respostas das perguntas (Pn) e o peso da dimensão (PDn) são divididos pela soma dos pesos,
+              subtraído do fator de correção (Fn), caso aconteça a escolha de valor mínimo nas respostas para as
+              questões da dimensão. O embasamento dos pesos encontram-se nas orientações da Cartilha LGPD para o
+              setor agropecuário, no qual elenca o que deve ser feito para adequação, portanto, foram dados pesos
+              para as perguntas: 6 e 5 (prioridade urgente), 4 (prioridade alta), 3 e 2 (prioridade relevante) e
+              1 (prioridade normal). A relação dos pesos está ligada aos temas: elaboração de relatório de impacto;
+              atendimento aos direitos dos titulares; inventário de operações; regras internas de governança;
+              treinamentos e medidas de conscientização; monitoramento de eficácia de medidas, apresentado na
+              Tabela 5.</p>
+             
+            <!-- Figura7 Cálculos-->
+            <div class="d-flex justify-content-center py-5">
+              <div class="col-md-8"> 
+                <img src="assets/equation.png" alt="" class="img-fluid">
+              </div>                
+            </div>
+
+            <p>As dimensões processos e lei/norma possuem peso 4, seguidas das dimensões tecnologia, peso 3, e
+              a dimensão aprendizado com peso 2. O fator de correção considera o número de questões presentes em cada
+              dimensão. Para a classificação qualitativa dos índices finais, foi adotada a Certificação Seis Sigma,
+              que é uma metodologia para melhorar o desempenho de forma eficiente, com a utilização de um sistema de
+              belts:  White, Yellow, Green, Black e Master Black and Champion que auxiliam na evolução do projeto,
+              conforme Sabino (2018). A adaptação para a proposta está definida com as seguintes faixas: White Belt,
+              Yellow Belt, Green Belt, Black Belt e Master Black Belt, apresentadas na Figura 3.</p>    
+
+            <!-- Figura8 Belts de compliance do PDAgro-->
+            <div class="d-flex justify-content-center py-5">
+              <div class="col-md-6"> 
+                <img src="assets/belts.png" alt="" class="img-fluid">
+              </div>                
+            </div>
+
+            <p>As faixas possuem cores que indicam a posição de conformidade de proteção de dados e limites entre
+              cada uma de acordo com o que apresenta a Tabela 6.</p>
+
+            <!-- Figura9 Classificação qualitativa e quantitativa do PDAgro-->
+            <div class="d-flex justify-content-center py-5">
+              <div class="col-md-9"> 
+                <img src="assets/qualitative_table.png" alt="" class="img-fluid">
+              </div>                
+            </div>
+
+            <p>A classificação das faixas da Tabela 6 começa com a White Belt, indicando que a empresa não possui
+              adequação de proteção de dados, a segunda faixa, Yellow Belt, significa que existe um princípio de
+              conformidade com projeto de adequação inicial. A terceira faixa: Green Belt, aponta a existência
+              de um projeto de adequação à LGPD intermediário em andamento, a quarta faixa: Black Belt, indica
+              que a organização está adequada e a quinta faixa, Master Black Belt, significa que a empresa está
+              com consolidação de processos, conhece a LGPD, possui adequação da tecnologia e incentiva o
+              aprendizado dos seus empregados.</p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

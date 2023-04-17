@@ -11,8 +11,10 @@ import { CompanyComponent } from './company/company.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { IConfig, NgxMaskModule } from 'ngx-mask';
 import { NgbActiveModal, NgbDropdownModule, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
-import { ComponentsModule } from '../core/components.module';
 import { AdminComponent } from './admin/admin.component';
+import { AboutComponent } from './about/about.component';
+import { ComponentsModule } from '../components/components.module';
+import { RepositoryComponent } from './repository/repository.component';
 
 export function playerFactory() {
   return player;
@@ -30,7 +32,9 @@ const maskConfig: () => Partial<IConfig> = () => {
     ViewsComponent,
     DiagnosticComponent,
     CompanyComponent,
-    AdminComponent
+    AdminComponent,
+    AboutComponent,
+    RepositoryComponent
   ],
   imports: [
     CommonModule,

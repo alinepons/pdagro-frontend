@@ -2,6 +2,7 @@ import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+import { PipeModule } from "../core/pipe/pipe.module";
 import { ModalResultComponent } from './modal-result/modal-result.component';
 
 @NgModule({
@@ -11,7 +12,8 @@ import { ModalResultComponent } from './modal-result/modal-result.component';
   imports: [
     CommonModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    PipeModule
   ],
   exports : [
     ModalResultComponent

@@ -11,11 +11,12 @@ import { ModalCompanyComponent } from './components/modal-company/modal-company.
 import { ModalFeedbackComponent } from './components/modal-feedback/modal-feedback.component';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
     ModalCompanyComponent,
-    ModalFeedbackComponent,   
+    ModalFeedbackComponent  
   ],
   imports: [
     BrowserModule,

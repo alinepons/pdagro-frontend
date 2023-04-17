@@ -96,6 +96,44 @@ export class AdminComponent implements OnInit {
       })
   }
 
+  deleteFeedback(id: any) {
+    Swal.fire({
+      title: 'Atenção',
+      text: "Excluir avaliação? Essa ação não poderá ser desfeita!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sim, excluir!',
+      cancelButtonText: 'Cancelar',
+      focusCancel: true,
+      showClass: {
+        popup: 'animate__animated animate__fadeInDown animate__faster'
+      },
+      hideClass: {
+        popup: 'animate__animated animate__fadeOutUp animate__faster'
+      }
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // rotina de exclusao da empresa e todos os diagnosticos
+        this.diagnosticSrv.deleteFeedback(id)
+          .then((res: any) => {
+            this.toastSrv.success('Avaliação excluída com sucesso!', 'PDAgro')
+            this.getAllFeedback()
+          })
+          .catch((err) => {
+            console.log(err)
+            if (err.error && err.error.message) {
+              this.toastSrv.error(err.error.message, 'PDAgro')
+              return
+            }
+            this.toastSrv.error('Verifique sua conexão e tente novamente', 'PDAgro')
+          }
+          )
+      }
+    })
+  }
+
   deleteCompany(id: any) {
     console.log(id)
     Swal.fire({
@@ -225,15 +263,15 @@ export class AdminComponent implements OnInit {
     // T1 = weight_option * weight_question
     // soma entre eles depois divide pela soma dos S1... S4
 
-    // Média ponderada    
+    // Média ponderada
     // P1 = weight_option
-    // PD1 = peso da dimensao 
+    // PD1 = peso da dimensao
     // P1 x PD1
     // soma entre eles depois divide pela soma dos PD1... PD4
 
     // Fator de correcao
     // Q1 = quantidade de questoes de cada dimensao
-    // PD1 = peso da dimensao 
+    // PD1 = peso da dimensao
     // Q1 x PD1
     // soma entre eles depois divide pela soma dos PD1... PD4
 
@@ -323,7 +361,7 @@ export class AdminComponent implements OnInit {
 
     // VERIFICAR SE É IGUAL A 1
 
-    //let pontuacao_dimensao = PQ * POE / SOMA PQ 
+    //let pontuacao_dimensao = PQ * POE / SOMA PQ
 
     let R1 = T1 / S1
     let R2 = T2 / S2

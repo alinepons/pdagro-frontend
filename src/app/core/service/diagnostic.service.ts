@@ -40,4 +40,8 @@ export class DiagnosticService {
     return firstValueFrom(this.http.delete<any>(`${this.URL}diagnostic/delete?id=${id}`))
   }
 
+  deleteFeedback(id: string) {
+    return firstValueFrom(this.http.delete<any>(`${this.URL}diagnostic/feedback/delete?id=${id}`))
+  }
+
 }

@@ -1,9 +1,7 @@
 import { DatePipe } from '@angular/common';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, NgZone, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { AnimationItem } from 'lottie-web';
-import { AnimationOptions } from 'ngx-lottie';
 import { ToastrService } from 'ngx-toastr';
 import { ModalResultComponent } from 'src/app/components/modal-result/modal-result.component';
 import { ICompany } from 'src/app/core/models/company';
@@ -49,10 +47,7 @@ export class CompanyComponent implements OnInit {
     private diagnosticSrv: DiagnosticService,
     private modalService: NgbModal,
     public activeModal: NgbActiveModal,
-    private datePipe: DatePipe,
-    private ngZone: NgZone,
-    private cdr: ChangeDetectorRef
-  ) {
+    private datePipe: DatePipe  ) {
 
     this.formCompany.addControl('name', new FormControl(null, Validators.compose([Validators.required, Validators.minLength(3)])))
     this.formCompany.addControl('cnpj', new FormControl(null, Validators.compose([Validators.required, Validators.minLength(18), Validators.maxLength(18)])))
@@ -101,7 +96,8 @@ export class CompanyComponent implements OnInit {
       })
   }
 
-  cancelForm() {
+  resetForm() {
+    this.getCompany()
     this.view = 'LIST'
     this.activityOptions = []
     this.formCompany.reset()
@@ -119,10 +115,9 @@ export class CompanyComponent implements OnInit {
 
       this.companySrv.createCompany(data)
         .subscribe({
-          next: (res: any) => {
+          next: () => {
             this.toastSrv.success('Empresa cadastrada com sucesso!', 'PDAgro')
-            this.getCompany()
-            this.view = 'LIST'
+            this.resetForm()
           },
           error: (err) => {
             console.log(err)
@@ -174,7 +169,7 @@ export class CompanyComponent implements OnInit {
         // rotina de exclusao da empresa e todos os diagnosticos
 
         this.companySrv.deleteCompany(id)
-          .then((res: any) => {
+          .then(() => {
             this.toastSrv.success('Empresa excluída com sucesso!', 'PDAgro')
             this.getCompany()
           })
@@ -256,15 +251,15 @@ export class CompanyComponent implements OnInit {
     // T1 = weight_option * weight_question
     // soma entre eles depois divide pela soma dos S1... S4
 
-    // Média ponderada    
+    // Média ponderada
     // P1 = weight_option
-    // PD1 = peso da dimensao 
+    // PD1 = peso da dimensao
     // P1 x PD1
     // soma entre eles depois divide pela soma dos PD1... PD4
 
     // Fator de correcao
     // Q1 = quantidade de questoes de cada dimensao
-    // PD1 = peso da dimensao 
+    // PD1 = peso da dimensao
     // Q1 x PD1
     // soma entre eles depois divide pela soma dos PD1... PD4
 
@@ -312,7 +307,6 @@ export class CompanyComponent implements OnInit {
     let Q4 = this.resultLearning.length
     let PD4 = this.pesos.learning
 
-    let somaPesos = this.pesos.proccess + this.pesos.law + this.pesos.tech + this.pesos.learning
 
     this.resultProccess.forEach((x: any) => {
       P1 += x.weight_option
@@ -338,34 +332,36 @@ export class CompanyComponent implements OnInit {
       S4 += x.weight_question
     })
 
-    let den = (PD1 + PD2 + PD3 + PD4)
-
-    let F1 = (Q1 * PD1) //deve ser multiplicado pelo nro de questões
-    let F2 = (Q2 * PD2)
-    let F3 = (Q3 * PD3)
-    let F4 = (Q4 * PD4)
-    //let F4 = ((Q4 * PD4) / den)
-
-    let F = (F1 + F2 + F3 + F4)
-
-    // PESO DIMENSAO
+    // PONTOS DIMENSAO
     // PESO QUESTAO
     // PESO OPCAO ESCOLHIDA
 
-    // VERIFICAR SE É IGUAL A 1
-
-    //let pontuacao_dimensao = PQ * POE / SOMA PQ 
+    // Cálculo da Média Ponderada por Dimensão
+    //let pontuacao_dimensao = PQ * POE / SOMA PQ
 
     let R1 = T1 / S1
     let R2 = T2 / S2
     let R3 = T3 / S3
     let R4 = T4 / S4
 
+    // Cálculo do fator
+    // deve ser multiplicado pelo nro de questões
+    // PESO DIMENSÃO
+
+    let F1 = (Q1 * PD1) 
+    let F2 = (Q2 * PD2)
+    let F3 = (Q3 * PD3)
+    let F4 = (Q4 * PD4)
+
+    let den = (PD1 + PD2 + PD3 + PD4)
+
+    //let F4 = ((Q4 * PD4) / den)
+
     // let pontuação_dimensão sem o fator
     //let M1 = (P1 * PD1) /den
     //let M2 = (P2 * PD2) /den
     //let M3 = (P3 * PD3) /den
-    //let M4 = (P4 * PD4) /den
+    //let M4 = (P4 * PD4) /den    
 
     //Média final com fator
     let M1 = R1 === 1 ? (P1 * PD1) / den - (F1 / den) : (P1 * PD1) / den
@@ -373,14 +369,14 @@ export class CompanyComponent implements OnInit {
     let M3 = R3 === 1 ? (P3 * PD3) / den - (F3 / den) : (P3 * PD3) / den
     let M4 = R4 === 1 ? (P4 * PD4) / den - (F4 / den) : (P4 * PD4) / den
 
+    // VERIFICAR SE ALGUMA DAS DIMENSOES O RESULTADO FOI IGUAL A 1 E APLICAR O FATOR
+
     // console.log('Fator')
 
     // console.log('Dimensao Processos --> ', M1)
     // console.log('Dimensao Lei/Norma --> ', M2)
     // console.log('Dimensao Tecnologia --> ', M3)
-    // console.log('Dimensao Aprendizagem --> ', M4)
-
-    // VERIFICAR SE ALGUMA DAS DIMENSOES O RESULTADO FOI IGUAL A 1 E APLICAR O FATOR
+    // console.log('Dimensao Aprendizagem --> ', M4)  
 
     let M = M1 + M2 + M3 + M4
 

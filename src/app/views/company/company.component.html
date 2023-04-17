@@ -14,7 +14,7 @@
                 <div class="col-md-12 mb-4" *ngFor="let item of company">
                     <div class="card">
                         <div class="card-header d-flex flex-column flex-md-row align-items-md-center justify-content-md-between">
-                
+
                                 <p class="fw-bold m-0">{{item.name}}</p>
 
                                 <div class="d-flex">
@@ -23,20 +23,20 @@
                                         <i class="fa fa-stethoscope"></i>
                                         Diagnóstico
                                     </button>
-    
+
                                     <button class="btn btn-danger btn-sm px-2" (click)="deleteCompany(item.id)">
                                         <i class="fa fa-trash-can"></i> Excluir empresa
                                     </button>
                                 </div>
-                       
+
                         </div>
                         <div class="card-body pb-2">
-                            
+
                                 <div class="d-flex">
                                     <p class="fw-bold">CNPJ:</p>
                                     <p class="ms-2">{{item.cnpj}}</p>
                                 </div>
-                           
+
                             <div *ngIf="item.diagnostic.length > 0" class="row">
                                 <div class="col-md-2" *ngFor="let d of item.diagnostic; let i = index">
                                     <div class="p-2 mb-3 border rounded">
@@ -76,7 +76,7 @@
                         <div class="row">
                             <div class="col-md-8 mb-3">
                                 <label for="name">Nome ou Razão Social:</label>
-                                <input class="form-control form-control-sm" aria-label="Nome ou Razão Social"
+                                <input class="form-control form-control-sm" autofocus aria-label="Nome ou Razão Social"
                                     formControlName="name">
                                 <div *ngIf="name.invalid && (name.dirty || name.touched)" class="field-alert">
                                     <div *ngIf="name.errors?.['required']">
@@ -135,7 +135,7 @@
                             </div>
                             <div class="buttons mt-4">
                                 <button type="reset" class="btn btn-sm btn-outline-danger px-3 m-0 me-2"
-                                    (click)="cancelForm()">Cancelar</button>
+                                    (click)="resetForm()">Cancelar</button>
 
                                 <button type="button" class="btn btn-sm btn-success px-3" (click)="createCompany()"
                                     [disabled]="formCompany.invalid || formQuestions.invalid">Cadastrar empresa</button>

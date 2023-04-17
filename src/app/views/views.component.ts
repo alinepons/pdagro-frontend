@@ -68,6 +68,8 @@ export class ViewsComponent implements OnInit {
           allowOutsideClick: () => !Swal.isLoading()
         }).then((result) => {
           if (result.isConfirmed) {
+
+
             this.toastSrv.success('Conta excluída com sucesso!', 'PDAgro')
             this.authSrv.redirectLogoutUser()
           }

@@ -15,7 +15,7 @@
                         <span class="input-group-text">
                             <i class="fa fa-user"></i>
                         </span>
-                        <input type="text" formControlName="fullname" class="form-control form-control-sm"
+                        <input type="text" autofocus formControlName="fullname" class="form-control form-control-sm"
                             placeholder="Nome completo" aria-label="Nome completo">
                     </div>
                     <div *ngIf="fullname.invalid && (fullname.dirty || fullname.touched)" class="field-alert">
