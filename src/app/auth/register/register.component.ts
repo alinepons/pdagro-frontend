@@ -66,7 +66,7 @@ export class RegisterComponent implements OnInit {
     this.authService.register(model)
       .then((res) => {
         this.router.navigate(['auth']);
-        this.toastSrv.success('Cadastro realizado com sucesso!', 'Cadastro')
+        this.toastSrv.success('Cadastro realizado com sucesso! Emviamos um código de ativação para o seu email. Verifique na Caixa Principal, Spam ou Lixo Eletrônico', 'Cadastro')
         this.loading = false
       })
       .catch((err) => {
