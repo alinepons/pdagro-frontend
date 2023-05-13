@@ -1,5 +1,5 @@
 @import "~animate.css/animate.min";
-
+@import '~bootstrap/scss/bootstrap';
 
 html {
     position: relative;
@@ -57,5 +57,3 @@ html {
     }
 
 }
-/* Importing Bootstrap SCSS file. */
-@import '~bootstrap/scss/bootstrap';

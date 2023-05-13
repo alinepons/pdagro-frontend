@@ -75,7 +75,7 @@ export class CompanyComponent implements OnInit {
         this.pesos["tech"] = res[3].weight_dimension
         this.pesos["learning"] = res[4].weight_dimension
       })
-      .catch((err) => {
+      .catch((err: any) => {
         console.log(err)
       })
   }
@@ -119,7 +119,7 @@ export class CompanyComponent implements OnInit {
             this.toastSrv.success('Empresa cadastrada com sucesso!', 'PDAgro')
             this.resetForm()
           },
-          error: (err) => {
+          error: (err: any) => {
             console.log(err)
             if (err.error && err.error.message) {
               this.toastSrv.error(err.error.message, 'PDAgro')
@@ -242,7 +242,6 @@ export class CompanyComponent implements OnInit {
     })
   }
 
-
   buildFinalResults(diagnostic: any) {
 
     // Média por dimensão
@@ -307,7 +306,6 @@ export class CompanyComponent implements OnInit {
     let Q4 = this.resultLearning.length
     let PD4 = this.pesos.learning
 
-
     this.resultProccess.forEach((x: any) => {
       P1 += x.weight_option
       T1 += (x.weight_question * x.weight_option)
@@ -355,8 +353,6 @@ export class CompanyComponent implements OnInit {
 
     let den = (PD1 + PD2 + PD3 + PD4)
 
-    //let F4 = ((Q4 * PD4) / den)
-
     // let pontuação_dimensão sem o fator
     //let M1 = (P1 * PD1) /den
     //let M2 = (P2 * PD2) /den
@@ -370,13 +366,6 @@ export class CompanyComponent implements OnInit {
     let M4 = R4 === 1 ? (P4 * PD4) / den - (F4 / den) : (P4 * PD4) / den
 
     // VERIFICAR SE ALGUMA DAS DIMENSOES O RESULTADO FOI IGUAL A 1 E APLICAR O FATOR
-
-    // console.log('Fator')
-
-    // console.log('Dimensao Processos --> ', M1)
-    // console.log('Dimensao Lei/Norma --> ', M2)
-    // console.log('Dimensao Tecnologia --> ', M3)
-    // console.log('Dimensao Aprendizagem --> ', M4)  
 
     let M = M1 + M2 + M3 + M4
 

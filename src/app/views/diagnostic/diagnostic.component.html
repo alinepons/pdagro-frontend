@@ -168,7 +168,7 @@
                 <button type="button" class="btn btn-warning px-4 me-2"
                   [routerLink]="['/views/company']">Cancelar</button>
                 <button type="button" class="btn btn-secondary px-4 me-2" (click)="nextTab('law')">Voltar</button>
-                <button type="button" [disabled]="formTech.invalid" class="btn btn-success px-4"
+                <button type="button" [disabled]="formTech.invalid" class="btn btn-success px-4"  
                   (click)="nextTab('learning')">Avançar</button>
               </form>
             </fieldset>
@@ -211,7 +211,7 @@
                 </div>
                 <button type="button" class="btn btn-warning px-4 me-2"
                   [routerLink]="['/views/company']">Cancelar</button>
-                <button type="button" class="btn btn-secondary px-4 me-2" (click)="nextTab('learning')">Voltar</button>
+                <button type="button" class="btn btn-secondary px-4 me-2" (click)="nextTab('tech')">Voltar</button>
                 <button type="button" [disabled]="formLearning.invalid" *ngIf="!isFeedback" class="btn btn-success px-4"
                   (click)="nextTab('feedback')">Finalizar diagnóstico</button>
                 <button type="button" [disabled]="formLearning.invalid" *ngIf="isFeedback" class="btn btn-success px-4"
