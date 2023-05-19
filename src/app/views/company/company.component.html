@@ -33,7 +33,7 @@
                         <div class="card-body pb-2">
 
                                 <div class="d-flex">
-                                    <p class="fw-bold">CNPJ:</p>
+                                    <p class="fw-bold">CPF/CNPJ:</p>
                                     <p class="ms-2">{{item.cnpj}}</p>
                                 </div>
 
@@ -90,15 +90,15 @@
                         </div>
                         <div class="row">
                             <div class="col-md-4 mb-3">
-                                <label for="cnpj">CNPJ:</label>
-                                <input type="tel" class="form-control form-control-sm" aria-label="CNPJ"
-                                    formControlName="cnpj" [dropSpecialCharacters]="false" mask="00.000.000/0000-00">
+                                <label for="cnpj">CPF/CNPJ:</label>
+                                <input type="tel" class="form-control form-control-sm" aria-label="CPF/CNPJ"
+                                    formControlName="cnpj" [dropSpecialCharacters]="false" mask="000.000.000-00||00.000.000/0000-00">
                                 <div *ngIf="cnpj.invalid && (cnpj.dirty || cnpj.touched)" class="field-alert">
                                     <div *ngIf="cnpj.errors?.['required']">
                                         Este campo é obrigatório
                                     </div>
                                     <div *ngIf="cnpj.errors?.['minlength']">
-                                        CNPJ em formato incorreto
+                                        CPF/CNPJ em formato incorreto
                                     </div>
                                 </div>
                             </div>

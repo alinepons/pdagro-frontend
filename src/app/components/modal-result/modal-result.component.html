@@ -10,7 +10,7 @@
         <div class="d-flex align-items-start justify-content-between">
             <div class="overview">
                 <p>Empresa: <span>{{data.name}}</span></p>
-                <p>CNPJ: <span>{{data.cnpj}}</span></p>
+                <p>CPF/CNPJ: <span>{{data.cnpj}}</span></p>
                 
                 <p>Porte: <span>{{data.info.question_1}}</span></p>
                 <p>Atividade: <span *ngFor="let item of toArray(data.info.question_2); let i = index">{{item}}{{ i < (toArray(data.info.question_2).length - 1) ? ', ':'' }}</span></p>

@@ -50,7 +50,7 @@ export class CompanyComponent implements OnInit {
     private datePipe: DatePipe  ) {
 
     this.formCompany.addControl('name', new FormControl(null, Validators.compose([Validators.required, Validators.minLength(3)])))
-    this.formCompany.addControl('cnpj', new FormControl(null, Validators.compose([Validators.required, Validators.minLength(18), Validators.maxLength(18)])))
+    this.formCompany.addControl('cnpj', new FormControl(null, Validators.compose([Validators.required, Validators.minLength(14), Validators.maxLength(18)])))
   }
 
 
