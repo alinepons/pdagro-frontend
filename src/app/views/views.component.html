@@ -42,14 +42,18 @@
 
 <router-outlet></router-outlet>
 
-<footer class="footer d-flex flex-column align-items-center">
-  <div class="container text-center">
-    <span class="text-muted">PDAgro - Diagnóstico de Conformidade à LGPD</span>
+<footer class="footer">
+  <div class="row container mx-auto p-0">
+    <div class="col-md-4">
+      <span class="text-muted">PDAgro - Diagnóstico de Conformidade à LGPD</span>
+    </div>
+
+    <div class="col-md-4 d-flex align-items-center justify-content-start justify-content-md-center">
+    <span class="me-2">Email:</span> <a title="PDAgro" class="nav-link" href="mailto:pdagro.com?subject=Contato via PDAgro">contato@pdagro.com</a>
+    </div>
+    <div class="col-md-4 d-flex align-items-center justify-content-start justify-content-md-end">
+      <a title="Política de Privacidade e Termos de Uso" class="nav-link" href="https://api.pdagro.com/public/privacy-policy.pdf">Política de Privacidade e Termos de Uso</a>
+     </div>
   </div>
-  <div class="mail">
-    <a title="PDAgro" class="nav-link" href="mailto:pdagro.com?subject=Contato via PDAgro">contato@pdagro.com</a>
-  </div>
-  <div class="mail">
-    <a title="Política de Privacidade e Termos de Uso" class="nav-link" target="_blank" href="https://api.pdagro.com/public/privacy-policy.pdf">Política de Privacidade e Termos de Uso</a>
-  </div>
+ 
 </footer>
